@@ -15,13 +15,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js" integrity="sha512-xAxjKW1J/R4TFytv43xvQ7jFTrJlBzsDOH/Aw0fFc2nvarQkE3d08lTicjzUsZJYDoHYDCpwsUUqOJXh34A1sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js" integrity="sha512-xAxjKW1J/R4TFytv43xvQ7jFTrJlBzsDOH/Aw0fFc2nvarQkE3d08lTicjzUsZJYDoHYDCpwsUUqOJXh34A1sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" integrity="sha512-1PKqXBz2ju2JcAerHKL0ldg0PT/1vr3LghYAtc59+9xy8e19QEtaNUyt1gprouyWnpOPqNJjL4gXMRMEpHYyLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
-<body class="custom-cursor-active"> <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
 
-    <div id="particles-js"></div>
+</head>
+<body> <div id="particles-js"></div>
 
     <header id="header">
         <nav id="navbar" class="container">
@@ -44,15 +42,17 @@
 
         <section id="hero" class="section full-screen">
             <div class="container hero-content">
-                 <h2 class="hero-title hero-anim"> Joseph Catalano
+                <h2 class="hero-title hero-anim">
+                    Joseph Catalano
                 </h2>
                 <p class="subtitle hero-anim">
-                    <span id="typing-effect"></span> </p>
+                    <span id="typing-effect"></span>
+                </p>
                 <p class="hero-description hero-anim">Bridging creative engineering with robust software solutions. Passionate about technology, from embedded systems to scalable web applications.</p>
                 <div class="hero-links hero-anim">
                     <a href="#projects" class="btn btn-primary" data-hover-text="View My Work"><i class="fas fa-rocket"></i><span>View Projects</span></a>
                     <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-hover-text="Code & More"><i class="fab fa-github"></i><span>GitHub</span></a>
-                     </div>
+                </div>
             </div>
              <a href="#about" class="scroll-down-indicator" aria-label="Scroll down">
                 <i class="fas fa-chevron-down"></i>
@@ -61,7 +61,8 @@
 
         <section id="about" class="section bg-darker">
             <div class="container grid-about">
-                <div class="about-text content-box"> <h2><i class="fas fa-user-astronaut"></i> About Me</h2>
+                <div class="about-text content-box">
+                    <h2><i class="fas fa-user-astronaut"></i> About Me</h2>
                     <p>Driven Software Engineering student (B.Tech @ McMaster) with a foundation in Computer Engineering Technology (Adv. Diploma @ Seneca, GPA 3.5). My journey spans hands-on technical development, entrepreneurial leadership in digital marketing, and process optimization in supervisory roles.</p>
                     <p>I thrive on solving complex problems, whether it's architecting an IoT system, optimizing sales strategies, or debugging intricate code. I'm passionate about the intersection of hardware and software, and constantly exploring new technologies.</p>
                     <p>Beyond the screen, you'll find me exploring interests like:</p>
@@ -78,7 +79,8 @@
                          <li><i class="fas fa-seedling"></i> Self Growth</li>
                     </ul>
                 </div>
-                 <div class="about-image"> <img src="https://via.placeholder.com/400x500/555/eee?text=Joseph+C." alt="Joseph Catalano">
+                 <div class="about-image">
+                    <img src="https://via.placeholder.com/400x500/555/eee?text=Joseph+C." alt="Joseph Catalano">
                  </div>
             </div>
         </section>
@@ -141,15 +143,13 @@
          <section id="projects" class="section bg-darker">
              <div class="container">
                 <h2 class="section-title"><i class="fas fa-laptop-code"></i> Featured Projects</h2>
-
                 <div class="filter-buttons">
                     <button class="btn btn-filter active" data-filter="all">All</button>
                     <button class="btn btn-filter" data-filter="iot">IoT</button>
                     <button class="btn btn-filter" data-filter="web">Web Dev</button>
                     <button class="btn btn-filter" data-filter="pcb">Hardware/PCB</button>
                     <button class="btn btn-filter" data-filter="c">C/C++</button>
-                    </div>
-
+                </div>
                 <div class="projects-grid">
                     <article class="project-item card-hover content-box" data-tech="iot web c html js pcb embedded" data-modal-target="modal-iqleaf" tabindex="0" role="button" aria-haspopup="dialog">
                         <div class="project-image">
@@ -164,7 +164,6 @@
                             </div>
                         </div>
                     </article>
-
                     </div>
              </div>
          </section>
@@ -173,7 +172,8 @@
             <div class="container">
                 <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
                 <div class="education-grid">
-                     <div class="education-item card-hover content-box"> <div class="edu-header">
+                     <div class="education-item card-hover content-box">
+                        <div class="edu-header">
                              <i class="fas fa-university"></i>
                             <h3>McMaster University</h3>
                         </div>
@@ -181,7 +181,8 @@
                         <p><span class="edu-date"><i class="fas fa-calendar-alt"></i> Expected: May 2027</span> | <span class="location"><i class="fas fa-map-marker-alt"></i> Remote</span></p>
                         <p class="edu-details">Relevant Coursework: Data Structures, OOP, Databases, Software Design, Web Dev, OS.</p>
                     </div>
-                     <div class="education-item card-hover content-box" data-anim-delay="0.1"> <div class="edu-header">
+                     <div class="education-item card-hover content-box" data-anim-delay="0.1">
+                         <div class="edu-header">
                             <i class="fas fa-school"></i>
                             <h3>Seneca Polytechnic</h3>
                          </div>
@@ -197,27 +198,33 @@
         <section id="skills" class="section bg-darker">
             <div class="container">
                 <h2 class="section-title"><i class="fas fa-cogs"></i> Technical Skills</h2>
-                 <div class="skills-container"> <div class="skill-category content-box"> <h3><i class="fas fa-code"></i> Languages</h3>
+                 <div class="skills-container">
+                    <div class="skill-category content-box">
+                        <h3><i class="fas fa-code"></i> Languages</h3>
                         <div class="skills-list">
                             <span>Python</span><span>Java</span><span>C#</span><span>JavaScript</span><span>C++</span><span>C</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
                         </div>
                     </div>
-                     <div class="skill-category content-box"> <h3><i class="fas fa-layer-group"></i> Frameworks & Libraries</h3>
+                     <div class="skill-category content-box">
+                        <h3><i class="fas fa-layer-group"></i> Frameworks & Libraries</h3>
                          <div class="skills-list">
                             <span>React</span><span>Node.js</span><span>GSAP</span><span>Git</span><span>Eagle (PCB)</span><span>AWS (Familiar)</span><span>Azure (Familiar)</span>
                         </div>
                     </div>
-                    <div class="skill-category content-box"> <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                    <div class="skill-category content-box">
+                        <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
                          <div class="skills-list">
                              <span>VS Code</span><span>IntelliJ</span><span>Git/GitHub</span><span>Docker (Basic)</span><span>Linux</span><span>Windows</span><span>Google Analytics</span>
                         </div>
                     </div>
-                      <div class="skill-category content-box"> <h3><i class="fas fa-brain"></i> Methodologies & Concepts</h3>
+                      <div class="skill-category content-box">
+                        <h3><i class="fas fa-brain"></i> Methodologies & Concepts</h3>
                          <div class="skills-list">
                             <span>OOP</span><span>Data Structures</span><span>Algorithms</span><span>Agile (Familiar)</span><span>REST APIs</span><span>MVC</span><span>IoT</span><span>Embedded Systems</span>
                         </div>
                     </div>
-                    <div class="skill-category content-box"> <h3><i class="fas fa-users"></i> Professional</h3>
+                    <div class="skill-category content-box">
+                        <h3><i class="fas fa-users"></i> Professional</h3>
                          <div class="skills-list">
                             <span>Team Leadership</span><span>Project Management</span><span>Problem-Solving</span><span>Communication</span><span>Sales</span><span>Entrepreneurship</span><span>Data Analysis</span>
                         </div>
@@ -227,22 +234,26 @@
         </section>
 
         <section id="contact" class="section">
-            <div class="container contact-container"> <h2 class="section-title"><i class="fas fa-paper-plane"></i> Get In Touch</h2>
+            <div class="container contact-container">
+                <h2 class="section-title"><i class="fas fa-paper-plane"></i> Get In Touch</h2>
                 <p class="contact-subtitle">Interested in collaborating or have a question? Feel free to reach out!</p>
                 <div class="contact-methods">
-                    <div class="contact-card card-hover content-box"> <a href="mailto:joseph1catalano@gmail.com" aria-label="Email Joseph Catalano">
+                    <div class="contact-card card-hover content-box">
+                         <a href="mailto:joseph1catalano@gmail.com" aria-label="Email Joseph Catalano">
                             <i class="fas fa-envelope-open-text"></i>
                             <h3>Email</h3>
                             <span>joseph1catalano@gmail.com</span>
                         </a>
                     </div>
-                     <div class="contact-card card-hover content-box"> <a href="tel:+16474720905" aria-label="Call Joseph Catalano">
+                     <div class="contact-card card-hover content-box">
+                        <a href="tel:+16474720905" aria-label="Call Joseph Catalano">
                             <i class="fas fa-phone-alt"></i>
                             <h3>Phone</h3>
                             <span>(647) 472-0905</span>
                         </a>
                     </div>
-                     <div class="contact-card card-hover content-box"> <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" aria-label="Joseph Catalano on GitHub">
+                     <div class="contact-card card-hover content-box">
+                         <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" aria-label="Joseph Catalano on GitHub">
                              <i class="fab fa-github"></i>
                             <h3>GitHub</h3>
                             <span>View My Repositories</span>
@@ -257,7 +268,8 @@
     <footer id="footer">
         <div class="container">
             <p>&copy; <span id="current-year"></span> Joseph Catalano. Built with <i class="fas fa-heart" style="color: var(--accent-color);"></i> and Code.</p>
-             <p style="font-size: 0.8em; margin-top: 5px;">Generated on Wednesday, March 26, 2025.</p> </div>
+             <p style="font-size: 0.8em; margin-top: 5px;">Generated on Wednesday, March 26, 2025.</p>
+        </div>
     </footer>
 
     <div id="modal-iqleaf" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-iqleaf-title">
@@ -275,13 +287,13 @@
                 <li>**Visual Monitoring:** Integrated an ESP32-CAM module streaming video over Wi-Fi, accessible through the web interface, allowing for visual checks on the plant's condition.</li>
                 <li>**Local Display:** Included a TFT LCD screen connected via SPI to display current moisture levels, system status (e.g., "Watering", "Idle"), Wi-Fi connection details, and IP address for easy access to the web interface.</li>
                 <li>**Programming:** Core logic implemented in C/C++ within the Arduino framework for the ESP32. Leveraged libraries for Wi-Fi connectivity, web server, sensor communication (I2C/Analog), display drivers (SPI), and camera interfacing.</li>
+                 <li>**Version Control:** Utilized Git throughout the development process for code management and tracking changes.</li>
             </ul>
             <p><strong>Technologies Used:</strong> ESP32-S3, C/C++, Arduino Framework, HTML, CSS, JavaScript, Eagle CAD (PCB), Capacitive Moisture Sensor, ESP32-CAM, TFT LCD (SPI), Relay Module, Wi-Fi, Async Web Server, Git.</p>
             <div class="modal-links">
-                 </div>
+                </div>
         </div>
     </div>
-
     <script defer src="script.js"></script>
 
 </body>
