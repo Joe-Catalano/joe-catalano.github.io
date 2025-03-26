@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joseph Catalano | Creative Software Engineer</title> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Joseph Catalano | Creative Software Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -14,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js" integrity="sha512-xAxjKW1J/1K7PAGWGoXASdMJvxgIiFjmGieUo5HytjZO+3Qzn Zy3kTYqaqgS/NUfTkAHPAbzrc/1M5kx0itXQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" integrity="sha512-1pkdGW7zrQHiQxy3OowEM4yKiHrG1FsDsaCxN9voBoN4ABCLO90CLTJwDGLUW+7s3wW+XzeaiF6J1Oq7+nlqsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 </head>
 <body>
@@ -44,8 +48,7 @@
 
         <section id="hero" class="section full-screen">
             <div class="container hero-content">
-                 <h2 class="hero-title hero-anim">
-                    <span class="char">J</span><span class="char">o</span><span class="char">s</span><span class="char">e</span><span class="char">p</span><span class="char">h</span>&nbsp;<span class="char">C</span><span class="char">a</span><span class="char">t</span><span class="char">a</span><span class="char">l</span><span class="char">a</span><span class="char">n</span><span class="char">o</span>
+                 <h2 class="hero-title hero-anim"> Joseph Catalano
                 </h2>
                 <p class="subtitle hero-anim">
                     <span id="typing-effect"></span> </p>
@@ -154,7 +157,7 @@
                     </div>
 
                 <div class="projects-grid">
-                    <article class="project-item card-hover content-box" data-tech="iot web c html js pcb embedded" data-modal-target="modal-iqleaf">
+                    <article class="project-item card-hover content-box" data-tech="iot web c html js pcb embedded" data-modal-target="modal-iqleaf" tabindex="0" role="button" aria-haspopup="dialog">
                         <div class="project-image">
                             <img src="https://via.placeholder.com/400x250/007bff/eee?text=IQ-Leaf+Preview" alt="IQ-Leaf Project">
                             <div class="project-overlay"><span>View Details</span><i class="fas fa-search-plus"></i></div>
@@ -273,23 +276,24 @@
         </div>
     </footer>
 
-    <div id="modal-iqleaf" class="modal">
+    <div id="modal-iqleaf" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-iqleaf-title">
         <div class="modal-content content-box">
             <button class="modal-close" aria-label="Close modal">&times;</button>
-            <h2>IQ-Leaf System</h2>
+            <h2 id="modal-iqleaf-title">IQ-Leaf System</h2>
             <img src="https://via.placeholder.com/600x350/007bff/eee?text=IQ-Leaf+Detail" alt="IQ-Leaf Detailed View" class="modal-image">
-            <p>This project involved creating an end-to-end IoT solution for plant care...</p>
+            <p>This project involved creating an end-to-end IoT solution for plant care, integrating sensors, actuators, custom hardware, and both local and remote interfaces.</p>
             <p><strong>Key Features:</strong></p>
             <ul>
-                <li>Real-time capacitive moisture sensing.</li>
-                <li>Automated watering via 5V pump and relay control.</li>
-                <li>Custom PCB designed in Eagle, integrating ESP32-S3, sensors, and drivers.</li>
-                <li>Web-based dashboard (HTML/CSS/JS) served from ESP32 for remote monitoring and control.</li>
-                <li>ESP32-CAM integration for live visual feedback and time-lapses (potential feature).</li>
-                <li>Local TFT LCD display showing current status, sensor readings, and IP address.</li>
-                <li>Code primarily in C (Arduino framework), with HTML/CSS/JS for the web interface.</li>
+                <li>Real-time capacitive moisture sensing for accurate soil hydration monitoring.</li>
+                <li>Automated watering via 5V pump and relay control, triggered by moisture thresholds.</li>
+                <li>Custom PCB designed in Eagle, integrating ESP32-S3, sensors, power management, and output drivers.</li>
+                <li>Web-based dashboard (HTML/CSS/JS) served directly from the ESP32 for remote monitoring and manual control over Wi-Fi.</li>
+                <li>ESP32-CAM integration for live visual feedback and potential time-lapse capture.</li>
+                <li>Local TFT LCD display showing current status, sensor readings, IP address, and system alerts.</li>
+                <li>Code primarily in C/C++ using the Arduino framework, leveraging libraries for Wi-Fi, web server, sensors, and display.</li>
+                 <li>Robust wiring and power management considerations for reliable operation.</li>
             </ul>
-            <p><strong>Technologies Used:</strong> ESP32-S3, C/C++, Arduino Framework, HTML, CSS, JavaScript, Eagle (PCB), Capacitive Moisture Sensor, ESP32-CAM, TFT LCD.</p>
+            <p><strong>Technologies Used:</strong> ESP32-S3, C/C++, Arduino Framework, HTML, CSS, JavaScript, Eagle (PCB), Capacitive Moisture Sensor, ESP32-CAM, TFT LCD, Wi-Fi, Web Server, Git.</p>
             <div class="modal-links">
                 </div>
         </div>
