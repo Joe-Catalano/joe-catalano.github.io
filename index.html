@@ -1,305 +1,828 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joseph Catalano | Creative Software Engineer</title>
+/* --- === Joseph Catalano Portfolio - Enhanced Styles === --- */
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+/* --- === 1. Global Settings & Variables === --- */
+:root {
+    /* Color Palette (Dark Theme) */
+    --bg-dark-primary: #121212; /* Very dark grey, near black */
+    --bg-dark-secondary: #1a1a1a; /* Slightly lighter dark grey */
+    --bg-dark-tertiary: #2a2a2a; /* Card background */
+    --text-light-primary: #e0e0e0; /* Light grey text */
+    --text-light-secondary: #a0a0a0; /* Medium grey text */
+    --accent-color: #00aaff; /* Vibrant blue accent */
+    --accent-color-darker: #0088cc;
+    --accent-gradient: linear-gradient(135deg, #00aaff, #0077cc);
+    --white: #ffffff;
+    --red-error: #ff4d4d;
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif; /* Modern sans-serif */
+    --font-secondary: 'Roboto Mono', monospace; /* For code/tech elements */
+    --text-base-size: 16px; /* Base font size for rem calculations */
 
-    <link rel="stylesheet" href="style.css">
+    /* Spacing & Layout */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2.5rem;
+    --spacing-xl: 4rem;
+    --container-width: 1200px;
+    --navbar-height: 70px;
+    --border-radius: 8px;
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js" integrity="sha512-xAxjKW1J/1K7PAGWGoXASdMJvxgIiFjmGieUo5HytjZO+3Qzn Zy3kTYqaqgS/NUfTkAHPAbzrc/1M5kx0itXQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" integrity="sha512-1pkdGW7zrQHiQxy3OowEM4yKiHrG1FsDsaCxN9voBoN4ABCLO90CLTJwDGLUW+7s3wW+XzeaiF6J1Oq7+nlqsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    /* Effects */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.4s ease;
+    --transition-slow: 0.6s ease;
+    --box-shadow-soft: 0 4px 15px rgba(0, 170, 255, 0.1);
+    --box-shadow-hover: 0 8px 25px rgba(0, 170, 255, 0.2);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--text-base-size);
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-height);
+    /* Custom scrollbar (optional) */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--bg-dark-secondary);
+}
+/* Custom scrollbar for Webkit */
+html::-webkit-scrollbar { width: 8px; }
+html::-webkit-scrollbar-track { background: var(--bg-dark-secondary); }
+html::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 10px; }
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.7;
+    color: var(--text-light-primary);
+    background-color: var(--bg-dark-primary);
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove custom cursor styles if not desired */
+body.custom-cursor-active {
+    cursor: none;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    width: 90%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: var(--spacing-sm);
+}
+h1 { font-size: 2.8rem; } /* Logo */
+h2 { font-size: 2.5rem; margin-bottom: var(--spacing-lg); } /* Section Titles */
+h3 { font-size: 1.6rem; color: var(--text-light-primary); } /* Card Titles */
+
+p {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-light-secondary);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+a:hover, a:focus {
+    color: var(--white);
+    outline: 2px solid var(--accent-color); /* Focus indicator */
+    outline-offset: 3px;
+}
+/* Remove outline for non-keyboard focus if desired, but keep for accessibility */
+a:focus:not(:focus-visible) {
+    outline: none;
+}
 
 
-</head>
-<body>
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
+ul { list-style: none; }
+li { margin-bottom: var(--spacing-xs); }
 
-    <div id="particles-js"></div>
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius);
+}
 
-    <header id="header">
-        <nav id="navbar" class="container">
-            <a href="#hero" class="logo-link" aria-label="Homepage"><h1 class="logo">JC</h1></a>
-            <ul role="menubar">
-                <li role="none"><a href="#hero" class="nav-link active" role="menuitem">Home</a></li>
-                <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
-                <li role="none"><a href="#experience" class="nav-link" role="menuitem">Experience</a></li>
-                <li role="none"><a href="#projects" class="nav-link" role="menuitem">Projects</a></li>
-                <li role="none"><a href="#education" class="nav-link" role="menuitem">Education</a></li>
-                <li role="none"><a href="#skills" class="nav-link" role="menuitem">Skills</a></li>
-                <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
-            </ul>
-            <button id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-    </header>
+.section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden; /* Contain absolutely positioned elements like particles */
+}
 
-    <main id="main-content">
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+    display: inline-block; /* Center alignment helper */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.section-title::after { /* Underline effect */
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+}
+.section-title i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
 
-        <section id="hero" class="section full-screen">
-            <div class="container hero-content">
-                 <h2 class="hero-title hero-anim"> Joseph Catalano
-                </h2>
-                <p class="subtitle hero-anim">
-                    <span id="typing-effect"></span> </p>
-                <p class="hero-description hero-anim">Bridging creative engineering with robust software solutions. Passionate about technology, from embedded systems to scalable web applications.</p>
-                <div class="hero-links hero-anim">
-                    <a href="#projects" class="btn btn-primary" data-hover-text="View My Work"><i class="fas fa-rocket"></i><span>View Projects</span></a>
-                    <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-hover-text="Code & More"><i class="fab fa-github"></i><span>GitHub</span></a>
-                     </div>
-            </div>
-             <a href="#about" class="scroll-down-indicator" aria-label="Scroll down">
-                <i class="fas fa-chevron-down"></i>
-            </a>
-        </section>
+.bg-darker { background-color: var(--bg-dark-secondary); }
+.full-screen { min-height: 100vh; display: flex; align-items: center; }
 
-        <section id="about" class="section bg-darker">
-            <div class="container grid-about">
-                <div class="about-text content-box anim-scroll-fade-up">
-                    <h2><i class="fas fa-user-astronaut"></i> About Me</h2>
-                    <p>Driven Software Engineering student (B.Tech @ McMaster) with a foundation in Computer Engineering Technology (Adv. Diploma @ Seneca, GPA 3.5). My journey spans hands-on technical development, entrepreneurial leadership in digital marketing, and process optimization in supervisory roles.</p>
-                    <p>I thrive on solving complex problems, whether it's architecting an IoT system, optimizing sales strategies, or debugging intricate code. I'm passionate about the intersection of hardware and software, and constantly exploring new technologies.</p>
-                    <p>Beyond the screen, you'll find me exploring interests like:</p>
-                     <ul class="interests-list">
-                        <li><i class="fas fa-dumbbell"></i> Fitness</li>
-                        <li><i class="fas fa-book"></i> Books</li>
-                        <li><i class="fas fa-chess-knight"></i> Chess</li>
-                        <li><i class="fas fa-headphones-alt"></i> Music Production</li>
-                        <li><i class="fas fa-fish"></i> Fishing</li>
-                        <li><i class="fas fa-microchip"></i> Hacking Culture</li>
-                        <li><i class="fas fa-hockey-puck"></i> Hockey</li>
-                        <li><i class="fas fa-rocket"></i> Outer Space</li>
-                        <li><i class="fas fa-car"></i> Cars</li>
-                         <li><i class="fas fa-seedling"></i> Self Growth</li>
-                    </ul>
-                </div>
-                 <div class="about-image anim-scroll-fade-in">
-                     <img src="https://via.placeholder.com/400x500/555/eee?text=Joseph+C." alt="Joseph Catalano">
-                 </div>
-            </div>
-        </section>
+/* --- === 2. Helper Classes === --- */
+.content-box {
+    background-color: var(--bg-dark-tertiary);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-soft);
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+}
 
-        <section id="experience" class="section">
-            <div class="container">
-                <h2 class="section-title anim-scroll-fade-up"><i class="fas fa-briefcase"></i> Professional Journey</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content card-hover content-box">
-                            <span class="timeline-date">Dec 2024 – Present</span>
-                            <h3>Regional Producer</h3>
-                            <p class="company"><i class="fas fa-building"></i> Globe Life - AO Division <span class="location"><i class="fas fa-map-marker-alt"></i> Remote</span></p>
-                            <ul>
-                                <li>Exceeded sales targets by 130% (>$40k revenue impact).</li>
-                                <li>Led and mentored a team of 5 agents, boosting regional performance.</li>
-                                <li>Implemented data-driven sales strategies using performance metrics.</li>
-                            </ul>
-                        </div>
-                    </div>
-                     <div class="timeline-item">
-                        <div class="timeline-content card-hover content-box">
-                            <span class="timeline-date">June 2022 - Sept 2023</span>
-                            <h3>Founder / CEO</h3>
-                            <p class="company"><i class="fas fa-building"></i> Digital Orb Marketing <span class="location"><i class="fas fa-map-marker-alt"></i> Remote</span></p>
-                            <ul>
-                                <li>Managed startup operations (Project Mgt, Leadership).</li>
-                                <li>Executed digital marketing campaigns (SEO, Social Media, Content).</li>
-                                <li>Leveraged Google Analytics for strategy optimization & ROI tracking.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content card-hover content-box">
-                             <span class="timeline-date">Dec 2017 - Nov 2024</span>
-                            <h3>Front End Supervisor</h3>
-                            <p class="company"><i class="fas fa-building"></i> Food Basics <span class="location"><i class="fas fa-map-marker-alt"></i> Georgetown, ON</span></p>
-                            <ul>
-                                <li>Oversaw financial audits, cash handling, and compliance.</li>
-                                <li>Managed customer service escalations and issue resolution.</li>
-                                <li>Trained and onboarded new team members.</li>
-                            </ul>
-                        </div>
-                    </div>
-                     <div class="timeline-item">
-                        <div class="timeline-content card-hover content-box">
-                            <span class="timeline-date">Summer 2021-2024</span>
-                            <h3>Foreman</h3>
-                            <p class="company"><i class="fas fa-building"></i> Ampac Paving <span class="location"><i class="fas fa-map-marker-alt"></i> Concord, ON</span></p>
-                            <ul>
-                                <li>Led and coordinated a team of 4+ on paving projects.</li>
-                                <li>Managed project resources, equipment, and timelines.</li>
-                             </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+.card-hover {
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    will-change: transform, box-shadow; /* Performance hint */
+}
+.card-hover:hover, .card-hover:focus-within {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-hover);
+    z-index: 10;
+    position: relative;
+}
 
-         <section id="projects" class="section bg-darker">
-             <div class="container">
-                <h2 class="section-title anim-scroll-fade-up"><i class="fas fa-laptop-code"></i> Featured Projects</h2>
 
-                <div class="filter-buttons anim-scroll-fade-up">
-                    <button class="btn btn-filter active" data-filter="all">All</button>
-                    <button class="btn btn-filter" data-filter="iot">IoT</button>
-                    <button class="btn btn-filter" data-filter="web">Web Dev</button>
-                    <button class="btn btn-filter" data-filter="pcb">Hardware/PCB</button>
-                    <button class="btn btn-filter" data-filter="c">C/C++</button>
-                    </div>
+/* --- === 3. Particle Background === --- */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Behind content */
+     /* Fallback background if particles fail */
+    background-color: var(--bg-dark-primary);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 20px 20px;
+}
 
-                <div class="projects-grid">
-                    <article class="project-item card-hover content-box" data-tech="iot web c html js pcb embedded" data-modal-target="modal-iqleaf" tabindex="0" role="button" aria-haspopup="dialog">
-                        <div class="project-image">
-                            <img src="https://via.placeholder.com/400x250/007bff/eee?text=IQ-Leaf+Preview" alt="IQ-Leaf Project">
-                            <div class="project-overlay"><span>View Details</span><i class="fas fa-search-plus"></i></div>
-                        </div>
-                        <div class="project-info">
-                            <h3>IQ-Leaf System</h3>
-                            <p>Automated plant monitoring & watering with IoT web interface and local display.</p>
-                            <div class="project-tags">
-                                <span class="tag">IoT</span><span class="tag">ESP32</span><span class="tag">C</span><span class="tag">HTML</span><span class="tag">JS</span><span class="tag">PCB</span>
-                            </div>
-                        </div>
-                    </article>
 
-                    </div>
-             </div>
-         </section>
+/* --- === 4. Custom Cursor (Optional) === --- */
+.cursor-dot,
+.cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 9999;
+    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Added size transition */
+}
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-color);
+}
+.cursor-outline {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--accent-color);
+    background-color: transparent; /* Make outline transparent */
+    transition-duration: 0.1s; /* Faster outline movement */
+}
+/* Cursor active state */
+body.custom-cursor-active .cursor-dot,
+body.custom-cursor-active .cursor-outline {
+    opacity: 1;
+}
+/* Cursor hover effect */
+body.custom-cursor-active .cursor-outline.hover-effect {
+     width: 50px; /* Grow outline */
+     height: 50px;
+     border-width: 3px;
+     background-color: rgba(0, 170, 255, 0.1); /* Subtle fill */
+}
 
-        <section id="education" class="section">
-            <div class="container">
-                <h2 class="section-title anim-scroll-fade-up"><i class="fas fa-graduation-cap"></i> Education</h2>
-                <div class="education-grid">
-                     <div class="education-item card-hover content-box anim-scroll-fade-up">
-                        <div class="edu-header">
-                             <i class="fas fa-university"></i>
-                            <h3>McMaster University</h3>
-                        </div>
-                        <p><strong>B.Tech - Software Engineering</strong></p>
-                        <p><span class="edu-date"><i class="fas fa-calendar-alt"></i> Expected: May 2027</span> | <span class="location"><i class="fas fa-map-marker-alt"></i> Remote</span></p>
-                        <p class="edu-details">Relevant Coursework: Data Structures, OOP, Databases, Software Design, Web Dev, OS.</p>
-                    </div>
-                     <div class="education-item card-hover content-box anim-scroll-fade-up" data-anim-delay="0.1"> <div class="edu-header">
-                            <i class="fas fa-school"></i>
-                            <h3>Seneca Polytechnic</h3>
-                         </div>
-                        <p><strong>Advanced Diploma - Computer Engineering Technology</strong></p>
-                        <p><span class="edu-date"><i class="fas fa-calendar-alt"></i> Graduated: Dec 2024</span> | <span class="location"><i class="fas fa-map-marker-alt"></i> Newnham, ON</span></p>
-                         <p>GPA: 3.5</p>
-                        <p class="edu-details">Relevant Coursework: Networking, Embedded Systems, Computer Arch, Cyber Security.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+/* --- === 5. Header & Navigation === --- */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--navbar-height);
+    background-color: rgba(18, 18, 18, 0.8); /* Semi-transparent dark */
+    backdrop-filter: blur(10px);
+    transition: background-color var(--transition-medium), box-shadow var(--transition-medium);
+    box-shadow: none;
+}
+#header.scrolled {
+    background-color: rgba(26, 26, 26, 0.95); /* More solid on scroll */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
 
-        <section id="skills" class="section bg-darker">
-            <div class="container">
-                <h2 class="section-title anim-scroll-fade-up"><i class="fas fa-cogs"></i> Technical Skills</h2>
-                 <div class="skills-container anim-scroll-stagger"> <div class="skill-category content-box">
-                        <h3><i class="fas fa-code"></i> Languages</h3>
-                        <div class="skills-list">
-                            <span>Python</span><span>Java</span><span>C#</span><span>JavaScript</span><span>C++</span><span>C</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
-                        </div>
-                    </div>
-                     <div class="skill-category content-box">
-                        <h3><i class="fas fa-layer-group"></i> Frameworks & Libraries</h3>
-                         <div class="skills-list">
-                            <span>React</span><span>Node.js</span><span>GSAP</span><span>Git</span><span>Eagle (PCB)</span><span>AWS (Familiar)</span><span>Azure (Familiar)</span>
-                        </div>
-                    </div>
-                    <div class="skill-category content-box">
-                        <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-                         <div class="skills-list">
-                             <span>VS Code</span><span>IntelliJ</span><span>Git/GitHub</span><span>Docker (Basic)</span><span>Linux</span><span>Windows</span><span>Google Analytics</span>
-                        </div>
-                    </div>
-                      <div class="skill-category content-box">
-                        <h3><i class="fas fa-brain"></i> Methodologies & Concepts</h3>
-                         <div class="skills-list">
-                            <span>OOP</span><span>Data Structures</span><span>Algorithms</span><span>Agile (Familiar)</span><span>REST APIs</span><span>MVC</span><span>IoT</span><span>Embedded Systems</span>
-                        </div>
-                    </div>
-                    <div class="skill-category content-box">
-                        <h3><i class="fas fa-users"></i> Professional</h3>
-                         <div class="skills-list">
-                            <span>Team Leadership</span><span>Project Management</span><span>Problem-Solving</span><span>Communication</span><span>Sales</span><span>Entrepreneurship</span><span>Data Analysis</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
 
-        <section id="contact" class="section">
-            <div class="container contact-container anim-scroll-fade-up">
-                <h2 class="section-title"><i class="fas fa-paper-plane"></i> Get In Touch</h2>
-                <p class="contact-subtitle">Interested in collaborating or have a question? Feel free to reach out!</p>
-                <div class="contact-methods">
-                    <div class="contact-card card-hover content-box">
-                         <a href="mailto:joseph1catalano@gmail.com" aria-label="Email Joseph Catalano">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <h3>Email</h3>
-                            <span>joseph1catalano@gmail.com</span>
-                        </a>
-                    </div>
-                     <div class="contact-card card-hover content-box">
-                        <a href="tel:+16474720905" aria-label="Call Joseph Catalano">
-                            <i class="fas fa-phone-alt"></i>
-                            <h3>Phone</h3>
-                            <span>(647) 472-0905</span>
-                        </a>
-                    </div>
-                     <div class="contact-card card-hover content-box">
-                         <a href="YOUR_GITHUB_LINK_HERE" target="_blank" rel="noopener noreferrer" aria-label="Joseph Catalano on GitHub">
-                             <i class="fab fa-github"></i>
-                            <h3>GitHub</h3>
-                            <span>View My Repositories</span>
-                         </a>
-                     </div>
-                     </div>
-                 <p class="contact-location"><i class="fas fa-map-marker-alt"></i> Based in Georgetown, ON, Canada</p>
-            </div>
-        </section>
-    </main>
+.logo-link { outline: none; } /* Remove outline specifically for logo */
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: var(--spacing-xs);
+}
 
-    <footer id="footer">
-        <div class="container">
-            <p>&copy; <span id="current-year"></span> Joseph Catalano. Built with <i class="fas fa-heart" style="color: var(--accent-color);"></i> and Code.</p>
-        </div>
-    </footer>
+#navbar ul {
+    display: flex;
+    align-items: center;
+}
 
-    <div id="modal-iqleaf" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-iqleaf-title">
-        <div class="modal-content content-box">
-            <button class="modal-close" aria-label="Close modal">&times;</button>
-            <h2 id="modal-iqleaf-title">IQ-Leaf System</h2>
-            <img src="https://via.placeholder.com/600x350/007bff/eee?text=IQ-Leaf+Detail" alt="IQ-Leaf Detailed View" class="modal-image">
-            <p>This project involved creating an end-to-end IoT solution for plant care, integrating sensors, actuators, custom hardware, and both local and remote interfaces.</p>
-            <p><strong>Key Features:</strong></p>
-            <ul>
-                <li>Real-time capacitive moisture sensing for accurate soil hydration monitoring.</li>
-                <li>Automated watering via 5V pump and relay control, triggered by moisture thresholds.</li>
-                <li>Custom PCB designed in Eagle, integrating ESP32-S3, sensors, power management, and output drivers.</li>
-                <li>Web-based dashboard (HTML/CSS/JS) served directly from the ESP32 for remote monitoring and manual control over Wi-Fi.</li>
-                <li>ESP32-CAM integration for live visual feedback and potential time-lapse capture.</li>
-                <li>Local TFT LCD display showing current status, sensor readings, IP address, and system alerts.</li>
-                <li>Code primarily in C/C++ using the Arduino framework, leveraging libraries for Wi-Fi, web server, sensors, and display.</li>
-                 <li>Robust wiring and power management considerations for reliable operation.</li>
-            </ul>
-            <p><strong>Technologies Used:</strong> ESP32-S3, C/C++, Arduino Framework, HTML, CSS, JavaScript, Eagle (PCB), Capacitive Moisture Sensor, ESP32-CAM, TFT LCD, Wi-Fi, Web Server, Git.</p>
-            <div class="modal-links">
-                </div>
-        </div>
-    </div>
+.nav-link {
+    color: var(--text-light-primary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    margin: 0 var(--spacing-xs);
+    position: relative;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+.nav-link::after { /* Underline effect */
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 80%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: transform var(--transition-medium);
+    transform-origin: center;
+}
+.nav-link:hover, .nav-link:focus, .nav-link.active {
+    color: var(--accent-color);
+    outline: none; /* Remove default focus, rely on underline */
+}
+.nav-link:hover::after, .nav-link:focus::after, .nav-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+}
 
-    <script defer src="script.js"></script>
+#menu-toggle { /* Hamburger Menu Button */
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: var(--text-light-primary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    z-index: 1100; /* Above navbar content */
+}
 
-</body>
-</html>
+
+/* --- === 6. Hero Section === --- */
+#hero {
+    padding-top: var(--navbar-height);
+    text-align: center;
+    position: relative; /* Needed for scroll indicator positioning */
+}
+.hero-content { z-index: 1; position: relative; } /* Ensure content is above particles */
+
+.hero-title {
+    font-size: clamp(2.5rem, 8vw, 5.5rem); /* Responsive font size */
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--white);
+    letter-spacing: -1px;
+    /* Was used for character animation - now animated as a whole */
+}
+
+.subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--text-light-secondary);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-secondary); /* Monospace font */
+    min-height: 1.5em; /* Reserve space */
+}
+.subtitle #typing-effect { /* Style the cursor within the typing effect */
+    font-weight: bold;
+}
+.subtitle #typing-effect::after {
+    content: '|';
+    opacity: 1;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero-description {
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin: 0 auto var(--spacing-lg);
+    color: var(--text-light-secondary);
+}
+
+.hero-links .btn { margin: var(--spacing-xs) var(--spacing-sm); }
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-light-secondary);
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+    z-index: 5;
+}
+.scroll-down-indicator:hover { color: var(--accent-color); }
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* --- === 7. Buttons === --- */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden; /* For hover effects */
+    z-index: 1;
+}
+.btn i { margin-right: var(--spacing-xs); }
+.btn span { position: relative; z-index: 2; transition: transform var(--transition-fast), opacity var(--transition-fast); } /* Added transition */
+
+/* Primary Button */
+.btn-primary {
+    background: var(--accent-gradient);
+    color: var(--white);
+    border-color: var(--accent-color);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background: var(--accent-color-darker);
+    border-color: var(--accent-color-darker);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 170, 255, 0.3);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: var(--bg-dark-tertiary);
+    color: var(--text-light-primary);
+    border-color: var(--text-light-secondary);
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Outline Button (Example) */
+.btn-outline {
+    background-color: transparent;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.btn-outline:hover, .btn-outline:focus {
+    background-color: rgba(0, 170, 255, 0.1);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Button Hover Text Effect (Optional) */
+.btn[data-hover-text]::before {
+    content: attr(data-hover-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: inherit; /* Match button background */
+    color: inherit; /* Match button text color */
+    transform: translateY(100%);
+    transition: transform var(--transition-fast);
+    z-index: 1;
+    font-weight: 600; /* Ensure hover text matches */
+    font-size: 0.95rem;
+    padding: inherit; /* Match padding */
+}
+.btn[data-hover-text]:hover::before, .btn[data-hover-text]:focus::before {
+    transform: translateY(0);
+}
+.btn[data-hover-text]:hover span, .btn[data-hover-text]:focus span {
+    transform: translateY(-100%);
+    opacity: 0;
+    /* Transition moved to .btn span */
+}
+
+/* --- === 8. About Section === --- */
+.grid-about {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+.about-text h2 { text-align: left; } /* Override centered title */
+.about-text h2::after { left: 0; transform: translateX(0); } /* Adjust underline */
+
+.interests-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding-left: 0;
+}
+.interests-list li {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: var(--text-light-secondary);
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+}
+.interests-list li i {
+    color: var(--accent-color);
+    margin-right: var(--spacing-xs);
+}
+
+.about-image img {
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--accent-color);
+}
+
+
+/* --- === 9. Timeline (Experience) === --- */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: var(--spacing-lg) auto 0 auto;
+}
+.timeline::before { /* The vertical line */
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: rgba(0, 170, 255, 0.2); /* Softer line */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    position: relative;
+    width: 50%;
+    /* Opacity handled by GSAP */
+}
+.timeline-item:nth-child(odd) { left: 0; padding-right: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: right; }
+.timeline-item:nth-child(even) { left: 50%; padding-left: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: left; }
+
+.timeline-item::after { /* The timeline dot */
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: var(--bg-dark-primary); /* Match background */
+    border: 4px solid var(--accent-color);
+    top: calc(var(--spacing-md) + 5px); /* Align with content box top */
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform var(--transition-fast);
+}
+.timeline-item:nth-child(odd)::after { right: -8px; transform: translateX(50%); }
+.timeline-item:nth-child(even)::after { left: -8px; transform: translateX(-50%); }
+.timeline-item:hover::after { transform: scale(1.3) translateX(var(--translate-x, -50%)); /* Dynamic translate */ }
+.timeline-item:nth-child(odd):hover::after { --translate-x: 50%; } /* Set variable for odd */
+
+.timeline-content {
+    position: relative; /* For card hover effect */
+}
+.timeline-date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-secondary);
+}
+.timeline-content h3 { margin-bottom: var(--spacing-xs); }
+.company {
+    font-style: italic;
+    color: var(--text-light-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-sm);
+    display: flex; /* Align items */
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap; /* Allow wrap on small screens if needed */
+}
+.location { margin-left: auto; font-style: normal; white-space: nowrap; } /* Push location to the right */
+.timeline-content ul { margin-top: var(--spacing-sm); padding-left: 0; }
+.timeline-content ul li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    color: var(--text-light-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0.7rem; /* Added from original */
+}
+.timeline-content ul li::before { /* Custom bullet */
+    content: "\f101"; /* Font Awesome angle-double-right */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    top: 1px;
+}
+/* Adjust alignment for right-aligned items */
+.timeline-item:nth-child(odd) .timeline-content ul { text-align: left; } /* Keep lists left-aligned */
+.timeline-item:nth-child(odd) .company { flex-direction: row-reverse; } /* Flip company items */
+.timeline-item:nth-child(odd) .company .location { margin-left: 0; margin-right: auto; }
+
+
+/* --- === 10. Projects Section === --- */
+.filter-buttons {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+.btn-filter {
+    background-color: var(--bg-dark-tertiary);
+    color: var(--text-light-secondary);
+    border: 1px solid var(--bg-dark-tertiary);
+    margin: 0 var(--spacing-xs) var(--spacing-xs) 0;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.9rem;
+    border-radius: 20px; /* Pill shape */
+}
+.btn-filter.active, .btn-filter:hover, .btn-filter:focus {
+    background-color: var(--accent-color);
+    color: var(--white);
+    border-color: var(--accent-color);
+    transform: none; /* Override btn hover */
+    box-shadow: none;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.project-item {
+    display: flex; /* Changed from original for filtering */
+    flex-direction: column;
+    cursor: pointer;
+    overflow: hidden; /* Clip image overflow */
+     /* Opacity handled by GSAP */
+}
+
+.project-image {
+    position: relative;
+    overflow: hidden;
+    margin: -var(--spacing-md) -var(--spacing-md) var(--spacing-md) -var(--spacing-md); /* Extend image to edges */
+}
+.project-image img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover; /* Crop image nicely */
+    transition: transform var(--transition-medium);
+    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Only top corners */
+}
+.project-item:hover .project-image img, .project-item:focus-within .project-image img {
+    transform: scale(1.05);
+}
+
+.project-overlay { /* Overlay shown on hover */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 170, 255, 0.7);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+    font-size: 1.1rem;
+    pointer-events: none; /* Allow clicks to go through to item */
+}
+.project-overlay i { font-size: 1.5rem; margin-top: var(--spacing-xs); }
+.project-item:hover .project-overlay, .project-item:focus-within .project-overlay {
+    opacity: 1;
+}
+
+.project-info { padding-top: 0; flex-grow: 1; display: flex; flex-direction: column; }
+.project-info h3 { margin-bottom: var(--spacing-xs); }
+.project-info p { font-size: 0.95rem; color: var(--text-light-secondary); margin-bottom: auto; /* Push tags down */ }
+.project-tags { margin-top: var(--spacing-md); }
+.tag {
+    display: inline-block;
+    background-color: rgba(0, 170, 255, 0.1);
+    color: var(--accent-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-family: var(--font-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* --- === 11. Project Modals === --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-medium), visibility var(--transition-medium);
+    padding: var(--spacing-md);
+}
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--spacing-lg); /* More padding inside modal */
+    transform: scale(0.9);
+    transition: transform var(--transition-medium);
+}
+.modal.active .modal-content {
+    transform: scale(1);
+}
+.modal-content h2 { margin-bottom: var(--spacing-md); }
+.modal-image { margin-bottom: var(--spacing-md); }
+.modal-content ul { padding-left: var(--spacing-md); margin-bottom: var(--spacing-md); }
+.modal-content ul li { list-style-type: disc; color: var(--text-light-secondary); }
+.modal-links { margin-top: var(--spacing-lg); border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: var(--spacing-md); }
+.modal-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: none;
+    border: none;
+    color: var(--text-light-secondary);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+.modal-close:hover, .modal-close:focus {
+    color: var(--red-error);
+    transform: rotate(90deg);
+    outline: none;
+}
+
+/* --- === 12. Education Section === --- */
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-md);
+}
+.education-item { /* Uses content-box */ /* Opacity handled by GSAP */ }
+.edu-header { display: flex; align-items: center; margin-bottom: var(--spacing-sm); }
+.edu-header i { font-size: 2rem; color: var(--accent-color); margin-right: var(--spacing-md); }
+.education-item h3 { margin-bottom: 0; }
+.education-item p { margin-bottom: var(--spacing-xs); color: var(--text-light-secondary); }
+.education-item strong { color: var(--text-light-primary); }
+.edu-date, .location { font-size: 0.9rem; color: var(--text-light-secondary); }
+.edu-date i, .location i { margin-right: var(--spacing-xs); color: var(--accent-color); }
+.edu-details { font-size: 0.9rem; font-style: italic; margin-top: var(--spacing-sm); }
+
+/* --- === 13. Skills Section === --- */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+.skill-category { /* Uses content-box */ /* Opacity handled by GSAP */ }
+.skill-category h3 { font-size: 1.3rem; margin-bottom: var(--spacing-md); border-bottom: 2px solid var(--accent-color); padding-bottom: var(--spacing-xs); }
+.skill-category h3 i { margin-right: var(--spacing-xs); }
+.skills-list { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+.skills-list span {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-light-secondary);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: var(--font-secondary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    cursor: default; /* Indicate non-interactive */
+}
+.skills-list span:hover {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+/* --- === 14. Contact Section === --- */
+.contact-container { text-align: center; }
+.contact-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light-secondary);
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+.contact-card { /* Uses content-box and card-hover */ text-align: center; }
+.contact-card a { display: block; color: inherit; text-decoration: none; padding: var(--spacing-md); margin: -var(--spacing-md); /* Make link fill card padding area */ }
+.contact-card a:hover, .contact-card a:focus { color: inherit; outline: none; } /* Override link hover */
+.contact-card i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+    transition: transform var(--transition-fast);
+}
+.contact-card:hover i, .contact-card:focus-within i { transform: scale(1.1); }
+.contact-card h3 { font-size: 1.2rem; color: var(--white); margin-bottom: var(--spacing-xs); }
+.contact-card span { font-size: 0.95rem; color: var(--text-light-secondary); }
+.contact-location { margin-top: var(--spacing-md); color: var(--text-light-secondary); }
+.contact-location i { margin-right: var(--spacing-xs); color: var(--accent-color); }
+
+/* --- === 15. Footer === --- */
+#footer {
+    background-color: var(--bg-dark-secondary);
+    color: var(--text-light-secondary);
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-xl);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+/* --- === 16. GSAP Animation Helpers === --- */
+/* Base states for elements animated purely by GSAP are set via JS 'from' vars */
+/* No extra CSS needed here for opacity/transform unless desired as fallback */
+
+
+/* --- === 17. Responsive Design === --- */
+@media (max-width: 992px
