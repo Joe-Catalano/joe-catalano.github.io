@@ -1,0 +1,542 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #007bff; /* Blue */
+    --secondary-color: #6c757d; /* Gray */
+    --light-color: #f8f9fa; /* Light Gray */
+    --dark-color: #343a40; /* Dark Gray */
+    --white-color: #ffffff;
+    --font-primary: 'Roboto', sans-serif;
+    --font-secondary: 'Lato', sans-serif;
+    --navbar-height: 60px; /* Variable for navbar height */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Enable smooth scrolling */
+    scroll-padding-top: var(--navbar-height); /* Offset for fixed navbar */
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: var(--white-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-secondary);
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px; /* Indent bullet points */
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+ul li::before {
+ content: "\2022"; /* Add bullet point */
+ color: var(--primary-color);
+ font-weight: bold;
+ display: inline-block;
+ width: 1em;
+ margin-left: -1em;
+}
+
+
+.section {
+    padding: 4rem 0;
+}
+
+.bg-light {
+    background-color: var(--light-color);
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* --- Header & Navbar --- */
+#header {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    position: fixed; /* Make navbar sticky */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--navbar-height);
+}
+
+#navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+#navbar .logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--white-color);
+}
+
+#navbar ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0; /* Reset padding for nav */
+}
+
+#navbar ul li::before {
+    content: none; /* Remove default bullet point styling */
+}
+
+
+#navbar ul li a {
+    color: var(--white-color);
+    padding: 10px 15px;
+    margin: 0 5px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+#navbar ul li a:hover,
+#navbar ul li a.active { /* Style for active link */
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* --- Hero Section --- */
+#hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1500x800/dde?text=Background+Image+Placeholder') no-repeat center center/cover; /* Placeholder background */
+    color: var(--white-color);
+    height: calc(100vh - var(--navbar-height)); /* Full viewport height minus navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: var(--navbar-height); /* Add padding to push content below fixed navbar */
+}
+
+#hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--white-color);
+}
+
+#hero .subtitle {
+    font-size: 1.5rem;
+    color: var(--light-color);
+    margin-bottom: 1.5rem;
+}
+
+#hero p {
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+}
+
+#hero .hero-links a {
+    margin: 0 10px;
+}
+
+/* Optional Profile Photo Style */
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+
+/* --- About Section --- */
+#about .container p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 1rem auto;
+}
+
+
+/* --- Experience Section (Timeline) --- */
+#experience .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* The vertical line */
+#experience .timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: var(--primary-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1.5px;
+}
+
+/* Container around content */
+#experience .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+/* Place containers to the left */
+#experience .timeline-item:nth-child(odd) {
+    left: 0;
+    padding-right: 65px; /* Space for circle */
+    text-align: right;
+}
+
+/* Place containers to the right */
+#experience .timeline-item:nth-child(even) {
+    left: 50%;
+    padding-left: 65px; /* Space for circle */
+}
+
+/* The circles on the timeline */
+#experience .timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: -8.5px; /* Adjust to center on line */
+    background-color: var(--white-color);
+    border: 4px solid var(--primary-color);
+    top: 22px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Adjust circle position for even items */
+#experience .timeline-item:nth-child(even)::after {
+    left: -8.5px; /* Adjust to center on line */
+}
+
+
+#experience .timeline-content {
+    padding: 15px 20px;
+    background-color: var(--white-color);
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+}
+
+#experience .timeline-content h3 {
+    margin-bottom: 0.3rem;
+}
+
+#experience .timeline-content .company {
+    font-style: italic;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+#experience .timeline-content ul {
+    padding-left: 20px;
+    margin-top: 0.5rem;
+    text-align: left; /* Ensure list text is left-aligned */
+}
+
+
+/* --- Projects Section --- */
+.project-item {
+    background: var(--white-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--primary-color);
+}
+
+.project-item h3 {
+    margin-bottom: 0.5rem;
+}
+
+.project-item img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 5px;
+}
+
+.project-item .btn {
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* --- Education Section --- */
+.education-item {
+    background: var(--white-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.education-item h3 {
+     margin-bottom: 0.3rem;
+}
+.education-item p {
+    margin-bottom: 0.5rem;
+}
+.education-item strong {
+    font-weight: 700;
+}
+.education-item em {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+
+/* --- Skills Section --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-category {
+    background: var(--white-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.skill-category h3 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.skill-category ul {
+    padding-left: 0; /* Reset padding for skills list */
+}
+
+.skill-category ul li {
+     background-color: var(--light-color);
+     padding: 5px 10px;
+     margin-bottom: 8px;
+     border-radius: 4px;
+     border: 1px solid #e0e0e0;
+}
+.skill-category ul li::before {
+    content: none; /* Remove bullets for skill items */
+}
+
+/* --- Contact Section --- */
+#contact .container {
+    text-align: center;
+}
+
+.contact-info {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    display: inline-block; /* Center the list block */
+    text-align: left; /* Align text inside list to the left */
+}
+
+.contact-info li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.contact-info li::before {
+    content: none; /* Remove bullets */
+}
+
+.contact-info strong {
+    margin-right: 0.5rem;
+    color: var(--dark-color);
+}
+
+/* --- Footer --- */
+#footer {
+    background: var(--dark-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem; /* Add space before footer */
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    #navbar .container {
+        flex-direction: column;
+        height: auto;
+        padding-bottom: 10px; /* Add padding when stacked */
+    }
+
+     #navbar .logo {
+         margin-bottom: 10px; /* Space below logo */
+     }
+
+
+    #navbar ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    #navbar ul li {
+        margin-bottom: 5px;
+        width: 100%;
+        text-align: center;
+    }
+
+    #navbar ul li a {
+        display: block; /* Make links take full width */
+        padding: 8px 15px;
+        border-bottom: none; /* Remove bottom border on mobile */
+    }
+    #navbar ul li a:hover,
+    #navbar ul li a.active {
+        background-color: var(--primary-color); /* Highlight background on mobile */
+        color: var(--white-color);
+        border-bottom: none;
+        border-radius: 4px;
+    }
+
+    /* Adjust scroll padding dynamically if navbar height changes */
+    /* You might need JS for perfect adjustment if height varies a lot */
+     html {
+        scroll-padding-top: 120px; /* Estimate a new height or adjust dynamically */
+    }
+
+    #hero {
+        height: auto; /* Adjust height */
+        padding: 6rem 0 4rem 0; /* Adjust padding */
+    }
+
+    #hero h2 {
+        font-size: 2.5rem;
+    }
+
+    /* Timeline adjustments */
+    #experience .timeline::after {
+        left: 20px; /* Move line to the left */
+    }
+
+    #experience .timeline-item {
+        width: 100%;
+        padding-left: 70px; /* Space content away from line */
+        padding-right: 25px;
+        left: 0 !important; /* Override inline style */
+        text-align: left; /* Ensure all text is left aligned */
+    }
+
+     #experience .timeline-item:nth-child(odd) {
+        padding-right: 25px;
+        text-align: left;
+    }
+    #experience .timeline-item:nth-child(even) {
+         padding-left: 70px;
+    }
+
+
+    #experience .timeline-item::after {
+        left: 12.5px; /* Position circle on the line */
+        right: auto;
+    }
+
+     #experience .timeline-content ul {
+         padding-left: 20px;
+         text-align: left; /* Re-confirm left alignment */
+     }
+
+    .skills-grid {
+        grid-template-columns: 1fr; /* Stack skills on smaller screens */
+    }
+}
+
+@media (max-width: 500px) {
+    #hero h2 {
+        font-size: 2rem;
+    }
+    #hero .subtitle {
+        font-size: 1.2rem;
+    }
+
+     /* Further reduce navbar scroll padding if needed */
+     html {
+        scroll-padding-top: 130px;
+    }
+}
