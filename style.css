@@ -325,13 +325,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     margin-bottom: var(--spacing-sm);
     color: var(--white);
     letter-spacing: -1px;
-    /* Prepare for GSAP animation */
-    overflow: hidden; /* Clip characters initially */
-}
-.hero-title .char { /* Individual characters for animation */
-    display: inline-block;
-    opacity: 0; /* Initially hidden for GSAP */
-    transform: translateY(100%);
+    /* Was used for character animation - now animated as a whole */
 }
 
 .subtitle {
@@ -394,7 +388,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     z-index: 1;
 }
 .btn i { margin-right: var(--spacing-xs); }
-.btn span { position: relative; z-index: 2; }
+.btn span { position: relative; z-index: 2; transition: transform var(--transition-fast), opacity var(--transition-fast); } /* Added transition */
 
 /* Primary Button */
 .btn-primary {
@@ -451,6 +445,9 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     transform: translateY(100%);
     transition: transform var(--transition-fast);
     z-index: 1;
+    font-weight: 600; /* Ensure hover text matches */
+    font-size: 0.95rem;
+    padding: inherit; /* Match padding */
 }
 .btn[data-hover-text]:hover::before, .btn[data-hover-text]:focus::before {
     transform: translateY(0);
@@ -458,7 +455,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 .btn[data-hover-text]:hover span, .btn[data-hover-text]:focus span {
     transform: translateY(-100%);
     opacity: 0;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    /* Transition moved to .btn span */
 }
 
 /* --- === 8. About Section === --- */
@@ -520,7 +517,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     padding: var(--spacing-sm) var(--spacing-lg);
     position: relative;
     width: 50%;
-    opacity: 0; /* Hidden for GSAP */
+    /* Opacity handled by GSAP */
 }
 .timeline-item:nth-child(odd) { left: 0; padding-right: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: right; }
 .timeline-item:nth-child(even) { left: 50%; padding-left: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: left; }
@@ -561,14 +558,16 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     display: flex; /* Align items */
     align-items: center;
     gap: var(--spacing-xs);
+    flex-wrap: wrap; /* Allow wrap on small screens if needed */
 }
-.location { margin-left: auto; font-style: normal; } /* Push location to the right */
+.location { margin-left: auto; font-style: normal; white-space: nowrap; } /* Push location to the right */
 .timeline-content ul { margin-top: var(--spacing-sm); padding-left: 0; }
 .timeline-content ul li {
     position: relative;
     padding-left: var(--spacing-md);
     color: var(--text-light-secondary);
     font-size: 0.95rem;
+    margin-bottom: 0.7rem; /* Added from original */
 }
 .timeline-content ul li::before { /* Custom bullet */
     content: "\f101"; /* Font Awesome angle-double-right */
@@ -614,11 +613,11 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 }
 
 .project-item {
-    display: flex;
+    display: flex; /* Changed from original for filtering */
     flex-direction: column;
     cursor: pointer;
     overflow: hidden; /* Clip image overflow */
-    opacity: 0; /* Hidden for GSAP */
+     /* Opacity handled by GSAP */
 }
 
 .project-image {
@@ -652,6 +651,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     opacity: 0;
     transition: opacity var(--transition-medium);
     font-size: 1.1rem;
+    pointer-events: none; /* Allow clicks to go through to item */
 }
 .project-overlay i { font-size: 1.5rem; margin-top: var(--spacing-xs); }
 .project-item:hover .project-overlay, .project-item:focus-within .project-overlay {
@@ -741,7 +741,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: var(--spacing-md);
 }
-.education-item { /* Uses content-box */ }
+.education-item { /* Uses content-box */ /* Opacity handled by GSAP */ }
 .edu-header { display: flex; align-items: center; margin-bottom: var(--spacing-sm); }
 .edu-header i { font-size: 2rem; color: var(--accent-color); margin-right: var(--spacing-md); }
 .education-item h3 { margin-bottom: 0; }
@@ -757,7 +757,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-md);
 }
-.skill-category { /* Uses content-box */ opacity: 0; /* For GSAP stagger */ }
+.skill-category { /* Uses content-box */ /* Opacity handled by GSAP */ }
 .skill-category h3 { font-size: 1.3rem; margin-bottom: var(--spacing-md); border-bottom: 2px solid var(--accent-color); padding-bottom: var(--spacing-xs); }
 .skill-category h3 i { margin-right: var(--spacing-xs); }
 .skills-list { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
@@ -768,4 +768,142 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     border-radius: 4px;
     font-size: 0.9rem;
     font-family: var(--font-secondary);
-    transition: background-color var(--transition-fast), color
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    cursor: default; /* Indicate non-interactive */
+}
+.skills-list span:hover {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+/* --- === 14. Contact Section === --- */
+.contact-container { text-align: center; }
+.contact-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light-secondary);
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+.contact-card { /* Uses content-box and card-hover */ text-align: center; }
+.contact-card a { display: block; color: inherit; text-decoration: none; padding: var(--spacing-md); margin: -var(--spacing-md); /* Make link fill card padding area */ }
+.contact-card a:hover, .contact-card a:focus { color: inherit; outline: none; } /* Override link hover */
+.contact-card i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+    transition: transform var(--transition-fast);
+}
+.contact-card:hover i, .contact-card:focus-within i { transform: scale(1.1); }
+.contact-card h3 { font-size: 1.2rem; color: var(--white); margin-bottom: var(--spacing-xs); }
+.contact-card span { font-size: 0.95rem; color: var(--text-light-secondary); }
+.contact-location { margin-top: var(--spacing-md); color: var(--text-light-secondary); }
+.contact-location i { margin-right: var(--spacing-xs); color: var(--accent-color); }
+
+/* --- === 15. Footer === --- */
+#footer {
+    background-color: var(--bg-dark-secondary);
+    color: var(--text-light-secondary);
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-xl);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+/* --- === 16. GSAP Animation Helpers === --- */
+/* Base states for elements animated purely by GSAP are set via JS 'from' vars */
+/* No extra CSS needed here for opacity/transform unless desired as fallback */
+
+
+/* --- === 17. Responsive Design === --- */
+@media (max-width: 992px) {
+    :root { --navbar-height: 65px; }
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.4rem; }
+    .section { padding: var(--spacing-lg) 0; }
+
+    .grid-about { grid-template-columns: 1fr; gap: var(--spacing-md); }
+    .about-image { order: -1; max-width: 350px; margin: 0 auto var(--spacing-md) auto; } /* Image first on smaller screens */
+    .about-text h2 { text-align: center; }
+    .about-text h2::after { left: 50%; transform: translateX(-50%); }
+
+    .timeline::before { left: 30px; } /* Move line to left */
+    .timeline-item { width: 100%; padding-left: 60px; /* Space for dot + content */ padding-right: var(--spacing-sm); left: 0 !important; text-align: left !important; }
+    .timeline-item:nth-child(odd) { padding-right: var(--spacing-sm); text-align: left !important; }
+    .timeline-item:nth-child(even) { padding-left: 60px; text-align: left !important; }
+    .timeline-item::after { left: 22px; transform: translateX(-50%); /* Center dot on line */ }
+    .timeline-item:nth-child(odd)::after { right: auto; }
+    .timeline-item:nth-child(odd) .company { flex-direction: row; } /* Reset direction */
+    .timeline-item:nth-child(odd) .company .location { margin-left: auto; margin-right: 0; } /* Reset location */
+    .timeline-item:hover::after { transform: scale(1.3) translateX(-50%); } /* Correct hover transform */
+
+}
+
+@media (max-width: 768px) {
+    html { scroll-padding-top: 60px; } /* Adjust for potentially smaller fixed header */
+    :root { --navbar-height: 60px; } /* Adjust if needed */
+
+    #navbar ul {
+        display: none; /* Hide desktop menu */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start off-screen */
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--bg-dark-secondary);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: var(--navbar-height);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        transition: right 0.4s ease-in-out;
+        z-index: 1050; /* Below toggle button, above content */
+    }
+    #navbar ul.active {
+        display: flex; /* Show menu */
+        right: 0; /* Slide in */
+    }
+    #navbar ul li { width: 100%; text-align: center; }
+    .nav-link { padding: var(--spacing-md) 0; margin: 0; width: 100%; font-size: 1.1rem; }
+    .nav-link::after { display: none; } /* Hide underline on mobile nav */
+    .nav-link:hover, .nav-link:focus, .nav-link.active {
+        background-color: rgba(0, 170, 255, 0.1);
+        color: var(--accent-color);
+    }
+
+    #menu-toggle { display: block; /* Show hamburger */ }
+    #menu-toggle.active .fa-bars { display: none; } /* Hide bars when active */
+    #menu-toggle:not(.active) .fa-times { display: none; } /* Hide X initially */
+    #menu-toggle.active .fa-times { display: inline-block; } /* Show X when active */
+    #menu-toggle .fa-times { font-size: 2rem; } /* Ensure X is visible */
+
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    .hero-title { font-size: clamp(2rem, 10vw, 4rem); }
+    .subtitle { font-size: clamp(1rem, 4vw, 1.5rem); }
+
+    .projects-grid { grid-template-columns: 1fr; }
+    .education-grid { grid-template-columns: 1fr; }
+    .skills-container { grid-template-columns: 1fr; }
+    .contact-methods { grid-template-columns: 1fr; }
+
+    .modal-content { width: 95%; padding: var(--spacing-md); }
+    .modal-close { top: var(--spacing-sm); right: var(--spacing-sm); font-size: 1.8rem; }
+
+     /* Reduce animation intensity on mobile */
+    .card-hover:hover, .card-hover:focus-within {
+        transform: translateY(-4px);
+        box-shadow: var(--box-shadow-soft); /* Less intense shadow */
+    }
+}
