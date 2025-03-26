@@ -5,9 +5,12 @@
     --light-color: #f8f9fa; /* Light Gray */
     --dark-color: #343a40; /* Dark Gray */
     --white-color: #ffffff;
+    --gradient-light: linear-gradient(to bottom right, #f8f9fa, #e9ecef); /* Subtle gradient for light bg */
     --font-primary: 'Roboto', sans-serif;
     --font-secondary: 'Lato', sans-serif;
     --navbar-height: 60px; /* Variable for navbar height */
+    --animation-duration: 0.6s; /* Base duration for scroll animations */
+    --animation-delay: 0.1s; /* Base delay for staggered animations */
 }
 
 * {
@@ -26,13 +29,14 @@ body {
     line-height: 1.6;
     color: var(--dark-color);
     background-color: var(--white-color);
+    overflow-x: hidden; /* Prevent horizontal scrollbars caused by animations */
 }
 
 .container {
     max-width: 1100px;
     margin: auto;
     padding: 0 20px;
-    overflow: hidden;
+    overflow: hidden; /* Clear floats/contain elements */
 }
 
 h1, h2, h3 {
@@ -42,9 +46,14 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2.2rem; /* Slightly larger */
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* More space */
+    color: var(--primary-color);
+}
+
+h2 i { /* Style for icons in headings */
+    margin-right: 10px;
     color: var(--primary-color);
 }
 
@@ -68,20 +77,28 @@ a:hover {
 
 ul {
     list-style: none;
-    padding-left: 20px; /* Indent bullet points */
+    padding-left: 0; /* Reset padding */
 }
 
 li {
     margin-bottom: 0.5rem;
 }
 
-ul li::before {
- content: "\2022"; /* Add bullet point */
+/* Custom list style if needed, or remove if default is fine */
+.section ul:not(.contact-info):not(.skills-grid ul) li {
+    position: relative;
+    padding-left: 1.5em; /* Space for custom bullet */
+    margin-bottom: 0.7rem;
+}
+.section ul:not(.contact-info):not(.skills-grid ul) li::before {
+ content: "\f105"; /* Font Awesome angle-right icon */
+ font-family: 'Font Awesome 6 Free'; /* Specify Font Awesome family */
+ font-weight: 900; /* Required for Solid icons */
  color: var(--primary-color);
- font-weight: bold;
- display: inline-block;
- width: 1em;
- margin-left: -1em;
+ position: absolute;
+ left: 0;
+ top: 1px; /* Adjust vertical alignment */
+ display: inline-block; /* Needed for positioning */
 }
 
 
@@ -90,20 +107,30 @@ ul li::before {
 }
 
 .bg-light {
-    background-color: var(--light-color);
+    background: var(--gradient-light); /* Use subtle gradient */
     border-top: 1px solid #e7e7e7;
     border-bottom: 1px solid #e7e7e7;
 }
 
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Slightly larger padding */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    font-weight: 600; /* Bolder text */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     margin: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+.btn i { /* Icon spacing in buttons */
+    margin-right: 8px;
+}
+
+.btn:hover {
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Enhanced shadow */
 }
 
 .btn-primary {
@@ -113,6 +140,7 @@ ul li::before {
 
 .btn-primary:hover {
     background-color: #0056b3;
+    color: var(--white-color); /* Ensure text remains white */
 }
 
 .btn-secondary {
@@ -122,18 +150,21 @@ ul li::before {
 
 .btn-secondary:hover {
     background-color: #5a6268;
+    color: var(--white-color);
 }
 
 /* --- Header & Navbar --- */
 #header {
-    background-color: var(--dark-color);
+    background-color: rgba(52, 58, 64, 0.95); /* Slightly transparent dark */
     color: var(--white-color);
-    position: fixed; /* Make navbar sticky */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
     height: var(--navbar-height);
+    transition: background-color 0.3s ease;
+    backdrop-filter: blur(5px); /* Add blur effect */
 }
 
 #navbar .container {
@@ -147,83 +178,78 @@ ul li::before {
     font-size: 1.8rem;
     font-weight: bold;
     color: var(--white-color);
+    transition: color 0.3s ease;
+}
+#navbar .logo a:hover {
+    color: var(--primary-color);
 }
 
 #navbar ul {
     display: flex;
     list-style: none;
-    padding-left: 0; /* Reset padding for nav */
 }
-
-#navbar ul li::before {
-    content: none; /* Remove default bullet point styling */
-}
-
 
 #navbar ul li a {
     color: var(--white-color);
     padding: 10px 15px;
     margin: 0 5px;
     transition: color 0.3s ease, border-bottom 0.3s ease;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent; /* Slightly thicker indicator */
+    font-weight: 500;
 }
 
 #navbar ul li a:hover,
-#navbar ul li a.active { /* Style for active link */
+#navbar ul li a.active {
     color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom-color: var(--primary-color);
 }
 
 /* --- Hero Section --- */
 #hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1500x800/dde?text=Background+Image+Placeholder') no-repeat center center/cover; /* Placeholder background */
+    /* Example gradient background - replace placeholder image */
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.7), rgba(108, 117, 125, 0.8)), url('https://via.placeholder.com/1500x800/6c757d/ffffff?text=Modern+Background') no-repeat center center/cover;
     color: var(--white-color);
-    height: calc(100vh - var(--navbar-height)); /* Full viewport height minus navbar */
+    min-height: 100vh; /* Use min-height */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: var(--navbar-height); /* Add padding to push content below fixed navbar */
+    padding-top: var(--navbar-height);
 }
 
 #hero h2 {
-    font-size: 3rem;
+    font-size: 3.5rem; /* Even larger */
     margin-bottom: 1rem;
     color: var(--white-color);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* Subtle text shadow */
 }
 
 #hero .subtitle {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--light-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    min-height: 2.5rem; /* Reserve space for typing */
+    font-weight: 300;
 }
 
-#hero p {
+#hero p:not(.subtitle) { /* Style the main paragraph */
     max-width: 700px;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 #hero .hero-links a {
     margin: 0 10px;
 }
 
-/* Optional Profile Photo Style */
-.profile-photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-
 /* --- About Section --- */
 #about .container p {
     text-align: center;
     max-width: 800px;
     margin: 0 auto 1rem auto;
+    font-size: 1.1rem;
 }
-
 
 /* --- Experience Section (Timeline) --- */
 #experience .timeline {
@@ -232,7 +258,6 @@ ul li::before {
     margin: auto;
 }
 
-/* The vertical line */
 #experience .timeline::after {
     content: '';
     position: absolute;
@@ -242,9 +267,9 @@ ul li::before {
     bottom: 0;
     left: 50%;
     margin-left: -1.5px;
+    opacity: 0.3; /* Softer line */
 }
 
-/* Container around content */
 #experience .timeline-item {
     padding: 10px 40px;
     position: relative;
@@ -252,128 +277,85 @@ ul li::before {
     width: 50%;
 }
 
-/* Place containers to the left */
-#experience .timeline-item:nth-child(odd) {
-    left: 0;
-    padding-right: 65px; /* Space for circle */
-    text-align: right;
-}
+#experience .timeline-item:nth-child(odd) { left: 0; padding-right: 65px; text-align: right; }
+#experience .timeline-item:nth-child(even) { left: 50%; padding-left: 65px; text-align: left; }
 
-/* Place containers to the right */
-#experience .timeline-item:nth-child(even) {
-    left: 50%;
-    padding-left: 65px; /* Space for circle */
-}
-
-/* The circles on the timeline */
-#experience .timeline-item::after {
+#experience .timeline-item::after { /* Timeline Circles */
     content: '';
     position: absolute;
-    width: 15px;
-    height: 15px;
-    right: -8.5px; /* Adjust to center on line */
+    width: 18px; /* Slightly larger */
+    height: 18px;
     background-color: var(--white-color);
     border: 4px solid var(--primary-color);
     top: 22px;
     border-radius: 50%;
     z-index: 1;
+    transition: transform 0.3s ease;
 }
+#experience .timeline-item:nth-child(odd)::after { right: -10px; } /* Adjust position */
+#experience .timeline-item:nth-child(even)::after { left: -10px; } /* Adjust position */
 
-/* Adjust circle position for even items */
-#experience .timeline-item:nth-child(even)::after {
-    left: -8.5px; /* Adjust to center on line */
+#experience .timeline-item:hover::after {
+    transform: scale(1.2); /* Grow circle on hover */
 }
-
 
 #experience .timeline-content {
-    padding: 15px 20px;
+    padding: 20px 25px; /* More padding */
     background-color: var(--white-color);
     position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px; /* More rounded */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Softer shadow */
     border: 1px solid #eee;
+    /* Add hover effect via .card-hover */
 }
 
-#experience .timeline-content h3 {
-    margin-bottom: 0.3rem;
-}
-
-#experience .timeline-content .company {
-    font-style: italic;
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-}
-
-#experience .timeline-content ul {
-    padding-left: 20px;
-    margin-top: 0.5rem;
-    text-align: left; /* Ensure list text is left-aligned */
-}
+#experience .timeline-content h3 { margin-bottom: 0.3rem; }
+#experience .timeline-content .company { font-style: italic; color: var(--secondary-color); font-size: 0.9rem; margin-bottom: 0.8rem; }
+#experience .timeline-content ul { padding-left: 0; margin-top: 0.5rem; } /* Bullets handled by global style */
 
 
 /* --- Projects Section --- */
 .project-item {
     background: var(--white-color);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1.8rem;
+    margin-bottom: 1.8rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     border-left: 5px solid var(--primary-color);
+    /* Add hover effect via .card-hover */
 }
-
-.project-item h3 {
-    margin-bottom: 0.5rem;
-}
-
-.project-item img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 1rem;
-    border-radius: 5px;
-}
-
-.project-item .btn {
-    margin-top: 1rem;
-    margin-right: 0.5rem;
-}
+.project-item h3 { margin-bottom: 0.5rem; }
+.project-item img { max-width: 100%; height: auto; margin-top: 1rem; border-radius: 5px; }
+.project-item .btn { margin-top: 1rem; margin-right: 0.5rem; }
+.project-item ul { padding-left: 0; }
 
 /* --- Education Section --- */
 .education-item {
     background: var(--white-color);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1.8rem;
+    margin-bottom: 1.8rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    /* Add hover effect via .card-hover */
 }
-
-.education-item h3 {
-     margin-bottom: 0.3rem;
-}
-.education-item p {
-    margin-bottom: 0.5rem;
-}
-.education-item strong {
-    font-weight: 700;
-}
-.education-item em {
-    font-size: 0.9rem;
-    color: var(--secondary-color);
-}
-
+.education-item h3 { margin-bottom: 0.3rem; }
+.education-item p { margin-bottom: 0.5rem; }
+.education-item strong { font-weight: 700; }
+.education-item em { font-size: 0.9rem; color: var(--secondary-color); }
 
 /* --- Skills Section --- */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Wider min width */
+    gap: 1.8rem;
 }
 
 .skill-category {
     background: var(--white-color);
-    padding: 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1.8rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    /* Add hover effect via .card-hover */
 }
 
 .skill-category h3 {
@@ -381,162 +363,133 @@ ul li::before {
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
+    font-size: 1.3rem; /* Slightly smaller */
 }
+.skill-category h3 i { margin-right: 8px; } /* Icon spacing */
 
-.skill-category ul {
-    padding-left: 0; /* Reset padding for skills list */
-}
-
+.skill-category ul { padding-left: 0; }
 .skill-category ul li {
      background-color: var(--light-color);
-     padding: 5px 10px;
-     margin-bottom: 8px;
+     padding: 8px 12px; /* More padding */
+     margin-bottom: 10px; /* More spacing */
      border-radius: 4px;
      border: 1px solid #e0e0e0;
+     display: inline-block; /* Make them tags */
+     margin-right: 8px;
+     font-size: 0.95rem;
+     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.skill-category ul li::before {
-    content: none; /* Remove bullets for skill items */
+.skill-category ul li:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
 }
 
 /* --- Contact Section --- */
-#contact .container {
-    text-align: center;
-}
-
-.contact-info {
-    list-style: none;
-    padding: 0;
-    margin-top: 2rem;
-    display: inline-block; /* Center the list block */
-    text-align: left; /* Align text inside list to the left */
-}
-
-.contact-info li {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-}
-.contact-info li::before {
-    content: none; /* Remove bullets */
-}
-
-.contact-info strong {
-    margin-right: 0.5rem;
-    color: var(--dark-color);
-}
+#contact .container { text-align: center; }
+.contact-info { list-style: none; padding: 0; margin-top: 2rem; display: inline-block; text-align: left; }
+.contact-info li { margin-bottom: 1.2rem; font-size: 1.1rem; }
+.contact-info li i { margin-right: 12px; color: var(--primary-color); width: 20px; text-align: center; } /* Icon style */
+.contact-info strong { margin-right: 0.5rem; color: var(--dark-color); }
 
 /* --- Footer --- */
 #footer {
     background: var(--dark-color);
     color: var(--light-color);
     text-align: center;
-    padding: 1.5rem 0;
-    margin-top: 2rem; /* Add space before footer */
+    padding: 2rem 0; /* More padding */
+    margin-top: 3rem;
 }
+
+/* --- Card Hover Effect --- */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-5px) scale(1.02); /* Lift and slightly scale */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    z-index: 10; /* Bring to front */
+    position: relative; /* Needed for z-index */
+}
+
+
+/* --- ANIMATIONS --- */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity var(--animation-duration) ease-out, transform var(--animation-duration) ease-out;
+    transition-delay: var(--animation-delay); /* Apply base delay */
+}
+
+/* Specific animation starting states */
+.fade-in {
+     opacity: 0;
+}
+.fade-in-up {
+    transform: translateY(30px); /* Start slightly below */
+    opacity: 0;
+}
+.fade-in-left {
+    transform: translateX(-30px); /* Start slightly left */
+    opacity: 0;
+}
+.fade-in-right {
+    transform: translateX(30px); /* Start slightly right */
+    opacity: 0;
+}
+
+/* State when element becomes visible */
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translate(0, 0); /* Return to original position */
+}
+
 
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
-    h2 {
-        font-size: 1.8rem;
-    }
+    h2 { font-size: 2rem; }
+    .btn { padding: 10px 20px; }
 
-    #navbar .container {
-        flex-direction: column;
-        height: auto;
-        padding-bottom: 10px; /* Add padding when stacked */
-    }
+    #navbar .container { flex-direction: column; height: auto; padding-bottom: 10px; }
+    #navbar .logo { margin-bottom: 10px; }
+    #navbar ul { flex-direction: column; align-items: center; width: 100%; }
+    #navbar ul li { margin-bottom: 5px; width: 100%; text-align: center; }
+    #navbar ul li a { display: block; padding: 8px 15px; border-bottom: none; }
+    #navbar ul li a:hover, #navbar ul li a.active { background-color: var(--primary-color); color: var(--white-color); border-bottom: none; border-radius: 4px; }
 
-     #navbar .logo {
-         margin-bottom: 10px; /* Space below logo */
-     }
+    html { scroll-padding-top: 120px; /* Adjust based on actual stacked navbar height */ }
 
-
-    #navbar ul {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    #navbar ul li {
-        margin-bottom: 5px;
-        width: 100%;
-        text-align: center;
-    }
-
-    #navbar ul li a {
-        display: block; /* Make links take full width */
-        padding: 8px 15px;
-        border-bottom: none; /* Remove bottom border on mobile */
-    }
-    #navbar ul li a:hover,
-    #navbar ul li a.active {
-        background-color: var(--primary-color); /* Highlight background on mobile */
-        color: var(--white-color);
-        border-bottom: none;
-        border-radius: 4px;
-    }
-
-    /* Adjust scroll padding dynamically if navbar height changes */
-    /* You might need JS for perfect adjustment if height varies a lot */
-     html {
-        scroll-padding-top: 120px; /* Estimate a new height or adjust dynamically */
-    }
-
-    #hero {
-        height: auto; /* Adjust height */
-        padding: 6rem 0 4rem 0; /* Adjust padding */
-    }
-
-    #hero h2 {
-        font-size: 2.5rem;
-    }
+    #hero { padding: 7rem 0 4rem 0; min-height: auto; } /* Adjust hero padding */
+    #hero h2 { font-size: 2.8rem; }
+    #hero .subtitle { font-size: 1.4rem; }
 
     /* Timeline adjustments */
-    #experience .timeline::after {
-        left: 20px; /* Move line to the left */
-    }
-
-    #experience .timeline-item {
-        width: 100%;
-        padding-left: 70px; /* Space content away from line */
-        padding-right: 25px;
-        left: 0 !important; /* Override inline style */
-        text-align: left; /* Ensure all text is left aligned */
-    }
-
-     #experience .timeline-item:nth-child(odd) {
-        padding-right: 25px;
+    #experience .timeline::after { left: 20px; }
+    #experience .timeline-item { width: 100%; padding-left: 50px; padding-right: 15px; left: 0 !important; text-align: left !important; } /* Ensure left align */
+    #experience .timeline-item::after { left: 11px; right: auto; } /* Adjust circle pos */
+    #experience .timeline-item:nth-child(odd),
+    #experience .timeline-item:nth-child(even) {
+        padding-left: 50px; /* Consistent padding */
+        padding-right: 15px;
         text-align: left;
     }
-    #experience .timeline-item:nth-child(even) {
-         padding-left: 70px;
+
+    .skills-grid { grid-template-columns: 1fr; }
+    .card-hover:hover { transform: translateY(-3px) scale(1.01); } /* Less intense hover on mobile */
+
+    /* Disable horizontal slide animations on mobile if they cause issues */
+    .fade-in-left, .fade-in-right {
+       transform: translateY(20px); /* Change to fade-in-up */
     }
-
-
-    #experience .timeline-item::after {
-        left: 12.5px; /* Position circle on the line */
-        right: auto;
-    }
-
-     #experience .timeline-content ul {
-         padding-left: 20px;
-         text-align: left; /* Re-confirm left alignment */
-     }
-
-    .skills-grid {
-        grid-template-columns: 1fr; /* Stack skills on smaller screens */
+    .animate-on-scroll.visible {
+       transform: translate(0, 0); /* Ensure it resets correctly */
     }
 }
 
 @media (max-width: 500px) {
-    #hero h2 {
-        font-size: 2rem;
-    }
-    #hero .subtitle {
-        font-size: 1.2rem;
-    }
-
-     /* Further reduce navbar scroll padding if needed */
-     html {
-        scroll-padding-top: 130px;
-    }
+    h2 { font-size: 1.8rem; }
+    #hero h2 { font-size: 2.2rem; }
+    #hero .subtitle { font-size: 1.2rem; }
+    html { scroll-padding-top: 130px; /* May need further adjustment */ }
+    .btn { font-size: 0.9rem; padding: 8px 16px; }
+    #experience .timeline-content { padding: 15px 20px; }
+    .skill-category, .project-item, .education-item { padding: 1.2rem; }
 }
