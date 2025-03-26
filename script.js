@@ -23,32 +23,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbarHeight = header ? header.offsetHeight : 70; // Fallback height
 
     // --- === 1. Custom Cursor (Optional) === ---
-    const cursorDot = document.querySelector('[data-cursor-dot]');
-    const cursorOutline = document.querySelector('[data-cursor-outline]');
-    const useCustomCursor = true; // Set to false to disable
+const cursorDot = document.querySelector('[data-cursor-dot]');
+const cursorOutline = document.querySelector('[data-cursor-outline]');
+const useCustomCursor = true; // Set to false to easily disable if preferred
 
-    if (useCustomCursor && cursorDot && cursorOutline) {
-        console.log("Initializing Custom Cursor."); // DEBUG LOG
-        body.classList.add('custom-cursor-active'); // Hide default cursor
+if (useCustomCursor && cursorDot && cursorOutline) {
+    console.log("Initializing Custom Cursor.");
+    body.classList.add('custom-cursor-active'); // Hide default cursor via CSS
 
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+    let isCursorVisible = false; // Track if cursor should be visible
 
-            // Use GSAP for smoother cursor movement
-            gsap.to(cursorDot, { duration: 0.15, x: posX, y: posY });
-            gsap.to(cursorOutline, { duration: 0.4, x: posX, y: posY }); // Slightly slower outline for trail effect
+    // Initial position (center) - prevents jump on first move
+    gsap.set([cursorDot, cursorOutline], { xPercent: -50, yPercent: -50, opacity: 0 });
+
+    const moveCursor = (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Make cursor visible on first move if it wasn't
+        if (!isCursorVisible) {
+            gsap.to([cursorDot, cursorOutline], { duration: 0.2, opacity: 1 });
+            isCursorVisible = true;
+        }
+
+        gsap.to(cursorDot, { duration: 0.15, x: posX, y: posY });
+        gsap.to(cursorOutline, { duration: 0.4, x: posX, y: posY }); // Slower outline for trail effect
+    };
+
+    const hideCursor = () => {
+        gsap.to([cursorDot, cursorOutline], { duration: 0.2, opacity: 0 });
+        isCursorVisible = false;
+    };
+
+    // Move cursor on mousemove
+    window.addEventListener('mousemove', moveCursor);
+
+    // ** NEW: Hide cursor when mouse leaves the document **
+    document.addEventListener('mouseleave', hideCursor);
+
+    // ** NEW: Show cursor when mouse enters the document **
+    document.addEventListener('mouseenter', (e) => {
+        // Immediately position and show cursor when mouse re-enters
+        const posX = e.clientX;
+        const posY = e.clientY;
+        gsap.set([cursorDot, cursorOutline], { x: posX, y: posY }); // Set position instantly
+        if (!isCursorVisible) {
+             gsap.to([cursorDot, cursorOutline], { duration: 0.2, opacity: 1 });
+             isCursorVisible = true;
+        }
+    });
+
+
+    // Add hover effect for specific interactive elements
+    document.querySelectorAll('a, button, .card-hover, .project-item, input, textarea, select').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorOutline.classList.add('hover-effect');
+            // Optional: Slightly change dot on hover?
+            // gsap.to(cursorDot, { duration: 0.2, scale: 1.5 });
         });
-
-        // Add hover effect for specific interactive elements
-        document.querySelectorAll('a, button, .card-hover, .project-item, input, textarea, select').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover-effect'));
-            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover-effect'));
+        el.addEventListener('mouseleave', () => {
+            cursorOutline.classList.remove('hover-effect');
+            // Optional: Revert dot scale
+            // gsap.to(cursorDot, { duration: 0.2, scale: 1 });
         });
+    });
 
-    } else {
-         console.log("Custom Cursor Disabled or Elements Not Found."); // DEBUG LOG
-    }
+} else {
+     console.log("Custom Cursor Disabled or Elements Not Found.");
+}
 
     // --- === 2. Smooth Scrolling & Active Nav Link === ---
     console.log("Setting up Smooth Scroll & Nav Links."); // DEBUG LOG
