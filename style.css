@@ -68,7 +68,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Remove custom cursor styles if not desired */
+/* Custom cursor styles */
 body.custom-cursor-active {
     cursor: none;
 }
@@ -87,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
     margin-bottom: var(--spacing-sm);
 }
-h1 { font-size: 2.8rem; } /* Logo */
+h1 { font-size: 2.8rem; } /* Logo size specifically */
 h2 { font-size: 2.5rem; margin-bottom: var(--spacing-lg); } /* Section Titles */
 h3 { font-size: 1.6rem; color: var(--text-light-primary); } /* Card Titles */
 
@@ -178,13 +178,13 @@ img {
 
 /* --- === 3. Particle Background === --- */
 #particles-js {
-    position: absolute;
+    position: absolute; /* Changed to absolute, relative to nearest positioned ancestor (body or a wrapper) */
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: -1; /* Behind content */
-     /* Fallback background if particles fail */
+     /* Fallback background if particles fail or are disabled */
     background-color: var(--bg-dark-primary);
     background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
     background-size: 20px 20px;
@@ -196,37 +196,40 @@ img {
 .cursor-outline {
     pointer-events: none;
     position: fixed;
-    top: 50%;
+    top: 50%; /* Initial position, JS updates */
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    opacity: 0;
+    opacity: 0; /* Hidden until activated by JS */
     z-index: 9999;
-    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Added size transition */
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+    will-change: transform, opacity, width, height; /* Performance hint */
 }
 .cursor-dot {
     width: 8px;
     height: 8px;
     background-color: var(--accent-color);
+    /* transition-delay for transform is handled by GSAP */
 }
 .cursor-outline {
     width: 30px;
     height: 30px;
     border: 2px solid var(--accent-color);
-    background-color: transparent; /* Make outline transparent */
-    transition-duration: 0.1s; /* Faster outline movement */
+    background-color: transparent;
+    /* transition-delay for transform is handled by GSAP */
 }
-/* Cursor active state */
+/* Cursor active state (when JS adds class to body) */
 body.custom-cursor-active .cursor-dot,
 body.custom-cursor-active .cursor-outline {
     opacity: 1;
 }
-/* Cursor hover effect */
+/* Cursor hover effect (when JS adds class to outline) */
 body.custom-cursor-active .cursor-outline.hover-effect {
      width: 50px; /* Grow outline */
      height: 50px;
      border-width: 3px;
      background-color: rgba(0, 170, 255, 0.1); /* Subtle fill */
+     opacity: 0.7; /* Slightly fade outline on hover */
 }
 
 /* --- === 5. Header & Navigation === --- */
@@ -256,7 +259,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 
 .logo-link { outline: none; } /* Remove outline specifically for logo */
 .logo {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* Use h1 size defined globally */
     font-weight: 700;
     color: var(--white);
     background: var(--accent-gradient);
@@ -300,15 +303,17 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 }
 
 #menu-toggle { /* Hamburger Menu Button */
-    display: none; /* Hidden by default */
+    display: none; /* Hidden by default, shown in media query */
     background: none;
     border: none;
     color: var(--text-light-primary);
     font-size: 1.8rem;
     cursor: pointer;
     padding: var(--spacing-xs);
-    z-index: 1100; /* Above navbar content */
+    z-index: 1100; /* Above navbar content, below modal */
+    line-height: 1; /* Prevent extra space */
 }
+/* Icon display handled by JS */
 
 
 /* --- === 6. Hero Section === --- */
@@ -316,6 +321,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     padding-top: var(--navbar-height);
     text-align: center;
     position: relative; /* Needed for scroll indicator positioning */
+    background-color: var(--bg-dark-primary); /* Ensure bg color if particles fail */
 }
 .hero-content { z-index: 1; position: relative; } /* Ensure content is above particles */
 
@@ -325,7 +331,6 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     margin-bottom: var(--spacing-sm);
     color: var(--white);
     letter-spacing: -1px;
-    /* Was used for character animation - now animated as a whole */
 }
 
 .subtitle {
@@ -333,17 +338,24 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     color: var(--text-light-secondary);
     margin-bottom: var(--spacing-md);
     font-family: var(--font-secondary); /* Monospace font */
-    min-height: 1.5em; /* Reserve space */
+    min-height: 1.5em; /* Reserve space for typing */
 }
-.subtitle #typing-effect { /* Style the cursor within the typing effect */
-    font-weight: bold;
+.subtitle #typing-effect { /* Style the text being typed */
+    font-weight: normal; /* Can adjust if needed */
 }
+/* Blinking cursor for typing effect */
 .subtitle #typing-effect::after {
     content: '|';
     opacity: 1;
+    margin-left: 2px; /* Space cursor slightly */
+    font-weight: 300; /* Thinner cursor */
+    color: var(--accent-color); /* Match accent */
     animation: blink 0.7s infinite;
 }
-@keyframes blink { 50% { opacity: 0; } }
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
 
 .hero-description {
     font-size: 1.1rem;
@@ -362,7 +374,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     color: var(--text-light-secondary);
     font-size: 1.5rem;
     animation: bounce 2s infinite;
-    z-index: 5;
+    z-index: 5; /* Above particles, below header */
 }
 .scroll-down-indicator:hover { color: var(--accent-color); }
 @keyframes bounce {
@@ -385,20 +397,20 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     transition: all var(--transition-fast);
     position: relative;
     overflow: hidden; /* For hover effects */
-    z-index: 1;
+    z-index: 1; /* Ensure button text is above potential ::before */
+    vertical-align: middle; /* Align buttons nicely if inline */
 }
 .btn i { margin-right: var(--spacing-xs); }
-.btn span { position: relative; z-index: 2; transition: transform var(--transition-fast), opacity var(--transition-fast); } /* Added transition */
+.btn span { position: relative; z-index: 2; transition: transform var(--transition-fast), opacity var(--transition-fast); display: inline-block; } /* Ensure span behaves correctly */
 
 /* Primary Button */
 .btn-primary {
     background: var(--accent-gradient);
     color: var(--white);
-    border-color: var(--accent-color);
+    border-color: transparent; /* No border needed with gradient bg */
 }
 .btn-primary:hover, .btn-primary:focus {
     background: var(--accent-color-darker);
-    border-color: var(--accent-color-darker);
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 170, 255, 0.3);
@@ -408,7 +420,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 .btn-secondary {
     background-color: var(--bg-dark-tertiary);
     color: var(--text-light-primary);
-    border-color: var(--text-light-secondary);
+    border-color: var(--bg-dark-tertiary); /* Match background initially */
 }
 .btn-secondary:hover, .btn-secondary:focus {
     background-color: var(--accent-color);
@@ -425,7 +437,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 }
 .btn-outline:hover, .btn-outline:focus {
     background-color: rgba(0, 170, 255, 0.1);
-    color: var(--white);
+    color: var(--white); /* Optionally change text color */
     transform: translateY(-2px);
 }
 
@@ -440,22 +452,27 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: inherit; /* Match button background */
-    color: inherit; /* Match button text color */
+    background: inherit; /* Use same background as button */
+    color: inherit; /* Use same color as button text */
     transform: translateY(100%);
     transition: transform var(--transition-fast);
-    z-index: 1;
-    font-weight: 600; /* Ensure hover text matches */
+    z-index: 1; /* Behind span */
+    font-weight: 600;
     font-size: 0.95rem;
-    padding: inherit; /* Match padding */
+    padding: var(--spacing-sm) var(--spacing-md); /* Match button padding */
+    border-radius: var(--border-radius); /* Match button radius */
+    box-sizing: border-box; /* Include padding in dimensions */
 }
+.btn-primary[data-hover-text]::before { background: var(--accent-color-darker); } /* Specific bg for primary hover */
+.btn-secondary[data-hover-text]::before { background: var(--accent-color); } /* Specific bg for secondary hover */
+.btn-outline[data-hover-text]::before { background-color: rgba(0, 170, 255, 0.1); } /* Specific bg for outline hover */
+
 .btn[data-hover-text]:hover::before, .btn[data-hover-text]:focus::before {
     transform: translateY(0);
 }
 .btn[data-hover-text]:hover span, .btn[data-hover-text]:focus span {
     transform: translateY(-100%);
     opacity: 0;
-    /* Transition moved to .btn span */
 }
 
 /* --- === 8. About Section === --- */
@@ -483,11 +500,21 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     color: var(--text-light-secondary);
     display: inline-flex; /* Align icon and text */
     align-items: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.interests-list li:hover {
+    background-color: var(--accent-color);
+    color: var(--white);
 }
 .interests-list li i {
     color: var(--accent-color);
     margin-right: var(--spacing-xs);
+    transition: color var(--transition-fast);
 }
+.interests-list li:hover i {
+    color: var(--white);
+}
+
 
 .about-image img {
     border-radius: var(--border-radius);
@@ -517,30 +544,34 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     padding: var(--spacing-sm) var(--spacing-lg);
     position: relative;
     width: 50%;
-    /* Opacity handled by GSAP */
+    /* Opacity and transform handled by GSAP */
 }
-.timeline-item:nth-child(odd) { left: 0; padding-right: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: right; }
-.timeline-item:nth-child(even) { left: 50%; padding-left: calc(var(--spacing-lg) + 30px); /* Space for dot */ text-align: left; }
+/* Position items left/right */
+.timeline-item:nth-child(odd) { left: 0; padding-right: calc(var(--spacing-lg) + 30px); text-align: right; }
+.timeline-item:nth-child(even) { left: 50%; padding-left: calc(var(--spacing-lg) + 30px); text-align: left; }
 
-.timeline-item::after { /* The timeline dot */
+/* Timeline dot */
+.timeline-item::after {
     content: '';
     position: absolute;
     width: 16px;
     height: 16px;
-    background-color: var(--bg-dark-primary); /* Match background */
+    background-color: var(--bg-dark-primary);
     border: 4px solid var(--accent-color);
-    top: calc(var(--spacing-md) + 5px); /* Align with content box top */
+    top: calc(var(--spacing-md) + 10px); /* Adjusted alignment */
     border-radius: 50%;
     z-index: 1;
     transition: transform var(--transition-fast);
 }
+/* Position dot left/right */
 .timeline-item:nth-child(odd)::after { right: -8px; transform: translateX(50%); }
 .timeline-item:nth-child(even)::after { left: -8px; transform: translateX(-50%); }
-.timeline-item:hover::after { transform: scale(1.3) translateX(var(--translate-x, -50%)); /* Dynamic translate */ }
-.timeline-item:nth-child(odd):hover::after { --translate-x: 50%; } /* Set variable for odd */
+/* Dot hover effect */
+.timeline-item:hover::after { transform: scale(1.3) translateX(var(--dot-translate-x, -50%)); }
+.timeline-item:nth-child(odd):hover::after { --dot-translate-x: 50%; }
 
 .timeline-content {
-    position: relative; /* For card hover effect */
+    position: relative; /* For card hover effect stacking */
 }
 .timeline-date {
     display: block;
@@ -555,19 +586,19 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     color: var(--text-light-secondary);
     font-size: 0.95rem;
     margin-bottom: var(--spacing-sm);
-    display: flex; /* Align items */
+    display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    flex-wrap: wrap; /* Allow wrap on small screens if needed */
+    flex-wrap: wrap;
 }
-.location { margin-left: auto; font-style: normal; white-space: nowrap; } /* Push location to the right */
+.location { margin-left: auto; font-style: normal; white-space: nowrap; }
 .timeline-content ul { margin-top: var(--spacing-sm); padding-left: 0; }
 .timeline-content ul li {
     position: relative;
     padding-left: var(--spacing-md);
     color: var(--text-light-secondary);
     font-size: 0.95rem;
-    margin-bottom: 0.7rem; /* Added from original */
+    margin-bottom: 0.7rem;
 }
 .timeline-content ul li::before { /* Custom bullet */
     content: "\f101"; /* Font Awesome angle-double-right */
@@ -578,9 +609,9 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     left: 0;
     top: 1px;
 }
-/* Adjust alignment for right-aligned items */
+/* Adjust alignment for right-aligned timeline items */
 .timeline-item:nth-child(odd) .timeline-content ul { text-align: left; } /* Keep lists left-aligned */
-.timeline-item:nth-child(odd) .company { flex-direction: row-reverse; } /* Flip company items */
+.timeline-item:nth-child(odd) .company { flex-direction: row-reverse; }
 .timeline-item:nth-child(odd) .company .location { margin-left: 0; margin-right: auto; }
 
 
@@ -597,12 +628,13 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     padding: var(--spacing-xs) var(--spacing-md);
     font-size: 0.9rem;
     border-radius: 20px; /* Pill shape */
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 .btn-filter.active, .btn-filter:hover, .btn-filter:focus {
     background-color: var(--accent-color);
     color: var(--white);
     border-color: var(--accent-color);
-    transform: none; /* Override btn hover */
+    transform: none;
     box-shadow: none;
 }
 
@@ -613,30 +645,30 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 }
 
 .project-item {
-    display: flex; /* Changed from original for filtering */
+    display: flex; /* For robust filtering show/hide */
     flex-direction: column;
     cursor: pointer;
-    overflow: hidden; /* Clip image overflow */
-     /* Opacity handled by GSAP */
+    overflow: hidden;
+    /* Base opacity and transform handled by GSAP */
 }
 
 .project-image {
     position: relative;
     overflow: hidden;
-    margin: -var(--spacing-md) -var(--spacing-md) var(--spacing-md) -var(--spacing-md); /* Extend image to edges */
+    margin: -var(--spacing-md) -var(--spacing-md) var(--spacing-md) -var(--spacing-md);
 }
 .project-image img {
     width: 100%;
-    height: 200px; /* Fixed height for consistency */
-    object-fit: cover; /* Crop image nicely */
+    height: 200px;
+    object-fit: cover;
     transition: transform var(--transition-medium);
-    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Only top corners */
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 .project-item:hover .project-image img, .project-item:focus-within .project-image img {
     transform: scale(1.05);
 }
 
-.project-overlay { /* Overlay shown on hover */
+.project-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -651,7 +683,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     opacity: 0;
     transition: opacity var(--transition-medium);
     font-size: 1.1rem;
-    pointer-events: none; /* Allow clicks to go through to item */
+    pointer-events: none;
 }
 .project-overlay i { font-size: 1.5rem; margin-top: var(--spacing-xs); }
 .project-item:hover .project-overlay, .project-item:focus-within .project-overlay {
@@ -660,7 +692,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 
 .project-info { padding-top: 0; flex-grow: 1; display: flex; flex-direction: column; }
 .project-info h3 { margin-bottom: var(--spacing-xs); }
-.project-info p { font-size: 0.95rem; color: var(--text-light-secondary); margin-bottom: auto; /* Push tags down */ }
+.project-info p { font-size: 0.95rem; color: var(--text-light-secondary); margin-bottom: auto; /* Push tags down */ flex-grow: 1; } /* Allow p to grow */
 .project-tags { margin-top: var(--spacing-md); }
 .tag {
     display: inline-block;
@@ -705,9 +737,10 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    padding: var(--spacing-lg); /* More padding inside modal */
+    padding: var(--spacing-lg);
     transform: scale(0.9);
     transition: transform var(--transition-medium);
+    /* Inherits .content-box styles */
 }
 .modal.active .modal-content {
     transform: scale(1);
@@ -715,7 +748,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 .modal-content h2 { margin-bottom: var(--spacing-md); }
 .modal-image { margin-bottom: var(--spacing-md); }
 .modal-content ul { padding-left: var(--spacing-md); margin-bottom: var(--spacing-md); }
-.modal-content ul li { list-style-type: disc; color: var(--text-light-secondary); }
+.modal-content ul li { list-style-type: disc; color: var(--text-light-secondary); margin-bottom: var(--spacing-xs); } /* Adjusted list style */
 .modal-links { margin-top: var(--spacing-lg); border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: var(--spacing-md); }
 .modal-close {
     position: absolute;
@@ -728,6 +761,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     line-height: 1;
     cursor: pointer;
     transition: color var(--transition-fast), transform var(--transition-fast);
+    padding: 5px; /* Easier click target */
 }
 .modal-close:hover, .modal-close:focus {
     color: var(--red-error);
@@ -741,9 +775,9 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: var(--spacing-md);
 }
-.education-item { /* Uses content-box */ /* Opacity handled by GSAP */ }
+.education-item { /* Base styles from .content-box, opacity/transform from GSAP */ }
 .edu-header { display: flex; align-items: center; margin-bottom: var(--spacing-sm); }
-.edu-header i { font-size: 2rem; color: var(--accent-color); margin-right: var(--spacing-md); }
+.edu-header i { font-size: 2rem; color: var(--accent-color); margin-right: var(--spacing-md); width: 30px; /* Fixed width for alignment */ text-align: center; }
 .education-item h3 { margin-bottom: 0; }
 .education-item p { margin-bottom: var(--spacing-xs); color: var(--text-light-secondary); }
 .education-item strong { color: var(--text-light-primary); }
@@ -757,7 +791,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-md);
 }
-.skill-category { /* Uses content-box */ /* Opacity handled by GSAP */ }
+.skill-category { /* Base styles from .content-box, opacity/transform from GSAP */ }
 .skill-category h3 { font-size: 1.3rem; margin-bottom: var(--spacing-md); border-bottom: 2px solid var(--accent-color); padding-bottom: var(--spacing-xs); }
 .skill-category h3 i { margin-right: var(--spacing-xs); }
 .skills-list { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
@@ -769,7 +803,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     font-size: 0.9rem;
     font-family: var(--font-secondary);
     transition: background-color var(--transition-fast), color var(--transition-fast);
-    cursor: default; /* Indicate non-interactive */
+    cursor: default;
 }
 .skills-list span:hover {
     background-color: var(--accent-color);
@@ -792,9 +826,9 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
 }
-.contact-card { /* Uses content-box and card-hover */ text-align: center; }
-.contact-card a { display: block; color: inherit; text-decoration: none; padding: var(--spacing-md); margin: -var(--spacing-md); /* Make link fill card padding area */ }
-.contact-card a:hover, .contact-card a:focus { color: inherit; outline: none; } /* Override link hover */
+.contact-card { /* Base styles from .content-box, opacity/transform from GSAP */ text-align: center; }
+.contact-card a { display: block; color: inherit; text-decoration: none; padding: var(--spacing-md); margin: -var(--spacing-md); } /* Link fills card */
+.contact-card a:hover, .contact-card a:focus { color: inherit; outline: none; }
 .contact-card i {
     font-size: 2.5rem;
     color: var(--accent-color);
@@ -803,7 +837,7 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 }
 .contact-card:hover i, .contact-card:focus-within i { transform: scale(1.1); }
 .contact-card h3 { font-size: 1.2rem; color: var(--white); margin-bottom: var(--spacing-xs); }
-.contact-card span { font-size: 0.95rem; color: var(--text-light-secondary); }
+.contact-card span { font-size: 0.95rem; color: var(--text-light-secondary); word-break: break-word; } /* Prevent long emails/links breaking layout */
 .contact-location { margin-top: var(--spacing-md); color: var(--text-light-secondary); }
 .contact-location i { margin-right: var(--spacing-xs); color: var(--accent-color); }
 
@@ -820,8 +854,11 @@ body.custom-cursor-active .cursor-outline.hover-effect {
 
 
 /* --- === 16. GSAP Animation Helpers === --- */
-/* Base states for elements animated purely by GSAP are set via JS 'from' vars */
-/* No extra CSS needed here for opacity/transform unless desired as fallback */
+/* Not strictly needed as GSAP sets 'from' vars, but useful as fallback if JS fails */
+/* Example: */
+/* .section-title, .about-text > *, .about-image, .timeline-item, etc. {
+    opacity: 0;
+} */
 
 
 /* --- === 17. Responsive Design === --- */
@@ -841,11 +878,10 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     .timeline-item:nth-child(odd) { padding-right: var(--spacing-sm); text-align: left !important; }
     .timeline-item:nth-child(even) { padding-left: 60px; text-align: left !important; }
     .timeline-item::after { left: 22px; transform: translateX(-50%); /* Center dot on line */ }
-    .timeline-item:nth-child(odd)::after { right: auto; }
+    .timeline-item:nth-child(odd)::after { right: auto; } /* Reset right positioning */
     .timeline-item:nth-child(odd) .company { flex-direction: row; } /* Reset direction */
     .timeline-item:nth-child(odd) .company .location { margin-left: auto; margin-right: 0; } /* Reset location */
     .timeline-item:hover::after { transform: scale(1.3) translateX(-50%); } /* Correct hover transform */
-
 }
 
 @media (max-width: 768px) {
@@ -862,9 +898,9 @@ body.custom-cursor-active .cursor-outline.hover-effect {
         height: 100vh;
         background-color: var(--bg-dark-secondary);
         flex-direction: column;
-        align-items: center;
+        align-items: stretch; /* Stretch items */
         justify-content: center;
-        padding-top: var(--navbar-height);
+        padding: var(--navbar-height) 0 0 0; /* Adjust padding */
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
         transition: right 0.4s ease-in-out;
         z-index: 1050; /* Below toggle button, above content */
@@ -874,7 +910,16 @@ body.custom-cursor-active .cursor-outline.hover-effect {
         right: 0; /* Slide in */
     }
     #navbar ul li { width: 100%; text-align: center; }
-    .nav-link { padding: var(--spacing-md) 0; margin: 0; width: 100%; font-size: 1.1rem; }
+    .nav-link {
+        padding: var(--spacing-md) var(--spacing-sm); /* Adjust padding */
+        margin: 0;
+        width: 100%;
+        font-size: 1.1rem;
+        display: block; /* Ensure full width clickable */
+        border-bottom: 1px solid rgba(255,255,255,0.05); /* Separator */
+    }
+     #navbar ul li:last-child .nav-link { border-bottom: none; }
+
     .nav-link::after { display: none; } /* Hide underline on mobile nav */
     .nav-link:hover, .nav-link:focus, .nav-link.active {
         background-color: rgba(0, 170, 255, 0.1);
@@ -882,14 +927,11 @@ body.custom-cursor-active .cursor-outline.hover-effect {
     }
 
     #menu-toggle { display: block; /* Show hamburger */ }
-    #menu-toggle.active .fa-bars { display: none; } /* Hide bars when active */
-    #menu-toggle:not(.active) .fa-times { display: none; } /* Hide X initially */
-    #menu-toggle.active .fa-times { display: inline-block; } /* Show X when active */
-    #menu-toggle .fa-times { font-size: 2rem; } /* Ensure X is visible */
+    /* Icon display handled by JS */
 
 
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
+    h1 { font-size: 2.5rem; } /* Mobile h1 size */
+    h2 { font-size: 2rem; } /* Mobile h2 size */
     .hero-title { font-size: clamp(2rem, 10vw, 4rem); }
     .subtitle { font-size: clamp(1rem, 4vw, 1.5rem); }
 
